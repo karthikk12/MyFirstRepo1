@@ -1,0 +1,811 @@
+package com.demo.furious;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class trigger {
+	protected static final int timestamp = 60;
+	static Scanner s = new Scanner(System.in);
+	static List<String> carlist = new ArrayList<String>();
+	static List<String> carlists = new ArrayList<String>();
+	static List<String> newcarlist = new ArrayList<String>();
+	static int audi1 = 0;
+	static int BMW1 = 0;
+	static int BENZ1 = 0;
+	static int FERRARI1 = 0;
+	static int jaguar1 = 0;
+	static int counts = 0;
+	static int seconds = 0;
+	static int counter = 1;
+	static SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
+	static Map<String, String> customerdetails = new HashMap<String, String>();
+	static List<Integer> rupees = new ArrayList<Integer>();
+	static Date currentdate = new Date();
+
+	public static void carlists() {
+		carlist.add("US 19 CZ 996 - BMW");
+		carlist.add("NZ 23 HX 112 - AUDI 400");
+		carlist.add("IND 72 vk 1 - Jaguar 6");
+		carlist.add("SA 42 JI 88 - BENZ ");
+		carlist.add("CBE 67 LO 32 - FERRARI 900");
+	}
+
+	static int count = 3;
+
+	public static void homepage() throws Exception {
+		System.out.println(
+				"                                                                             *****  Welcome to FURIOUS CAR service  *****                        ");
+		System.out.println(
+				"-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		userentry();
+	}
+
+	public static void carbackup() throws Exception {
+		System.out.println("");
+		System.out
+				.println("There are 10 luxury cars available in karthikeyans showroom How many cars u want to access");
+		System.out.println("");
+		System.out.println("Type the number of car u want : ");
+		int number = s.nextInt();
+		if (number > 10) {
+			System.out.println("...............Sorry out of limitations.........................");
+			carbackup();
+		} else if (number <= 10) {
+			System.out.println("");
+			System.out.println(number + " cars added to ur showroom.....Please check");
+			addcars(number);
+		}
+	}
+
+	public static void userentry() throws Exception {
+		System.out.println("");
+		if (count == 0) {
+			System.out.println(
+					"Sorry!!! Your account has been locked out....please contact 9080716486 to unlock your account");
+		}
+
+		if (count != 0) {
+			System.out.println("Please enter your username : ");
+			String username = s.next();
+			System.out.println("Please enter your password : ");
+			String password = s.next();
+			validation(username, password);
+		}
+	}
+
+	public static void validation(String username, String password) throws Exception {
+
+		if (username.equalsIgnoreCase("karthikeyan") || username.equalsIgnoreCase("sai")) {
+			if (username.equalsIgnoreCase("sai")) {
+				encryption1(username, password);
+			}
+			if (username.equalsIgnoreCase("karthikeyan")) {
+				encryption2(username, password);
+			}
+		} else {
+			System.out.println("");
+			System.out.println("Sorry invalid username");
+			userentry();
+		}
+	}
+
+	public static void contact1() throws Exception {
+		int inc = 0;
+		System.out.println("");
+		System.out.println("Carsize 0 detected.......Automatic connection established.............");
+		System.out.println("");
+		System.out.println("Connectiong to karthikeyans private_Server.....PLEASE WAIT...!!!!!");
+		for (int i = 0; i < 10; i++) {
+			Thread.sleep(1000);
+			System.out.println(".");
+			inc++;
+		}
+		System.out.println(" ");
+		System.out.println("Thanks for contacting Karthikeyan...");
+		System.out.println("");
+		if (inc > 0) {
+			private_server();
+		}
+	}
+
+	public static void timetracker() {
+		Timer timer = new Timer();
+		System.out.println(
+				"                                                                                   TIME TRACKER GAME WELCOMES YOU                                            ");
+		System.out.println("Enter any number from 1 to 60 to track for count : ");
+		int trackseconds = s.nextInt();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				seconds++;
+				System.out.println("Seconds running : " + counter + " : " + seconds);
+				if (seconds == trackseconds) {
+					int temp = seconds;
+					trackdisplay(count, temp);
+					seconds = 0;
+					counter++;
+
+				}
+
+			}
+
+		};
+		timer.scheduleAtFixedRate(task, 1000, 1000);
+
+	}
+
+	public static void fuelbackup() throws Exception {
+		System.out.println("");
+		for (int i = 0; i < 20; i++) {
+			System.out.println(
+					"********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************");
+			if (i == 10) {
+				System.out.println(
+						"                                                          Sorry SIR this feature is under developing stage......Please WAIT for our update!!!                                              ");
+			}
+		}
+		private_server();
+	}
+
+	public static void trackdisplay(int count, int tracksec) {
+		System.out.println("");
+		String curdate = timeformat.format(currentdate);
+		System.out.println(
+				">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Your Tracking second sir in time count : "
+						+ counter + " " + " trackseconds is " + tracksec + " current accurate time monitored is "
+						+ curdate + " s");
+
+		default_features();
+	}
+
+	public static void addcars(int number) throws Exception {
+		int tempcars = 10;
+		int result = tempcars - number;
+		if (number == 1) {
+
+			carlists.add("PK 100 nexa 90");
+		}
+		if (number == 2) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+		}
+		if (number == 3) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+
+		}
+		if (number == 4) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+			carlists.add("FERRARI 1000cc");
+
+		}
+		if (number == 5) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+			carlists.add("FERRARI 1000cc");
+			carlists.add("BMW Gene version");
+
+		}
+		if (number == 6) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+			carlists.add("FERRARI 1000cc");
+			carlists.add("BMW Gene version");
+			carlists.add("JAGUAR 1.0");
+
+		}
+		if (number == 7) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+			carlists.add("FERRARI 1000cc");
+			carlists.add("BMW Gene version");
+			carlists.add("JAGUAR 1.0");
+			carlists.add("AUDI 9000cc");
+
+		}
+		if (number == 8) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+			carlists.add("FERRARI 1000cc");
+			carlists.add("BMW Gene version");
+			carlists.add("JAGUAR 1.0");
+			carlists.add("AUDI 9000cc");
+			carlists.add("LAMBOGHINI");
+
+		}
+		if (number == 9) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+			carlists.add("FERRARI 1000cc");
+			carlists.add("BMW Gene version");
+			carlists.add("JAGUAR 1.0");
+			carlists.add("AUDI 9000cc");
+			carlists.add("LAMBOGHINI");
+			carlists.add("WLS 3.0");
+
+		}
+		if (number == 10) {
+
+			carlists.add("PK 100 nexa 90");
+			carlists.add("CS 150 Lisa 7.0");
+			carlists.add("BENZ 20.1");
+			carlists.add("FERRARI 1000cc");
+			carlists.add("BMW Gene version");
+			carlists.add("JAGUAR 1.0");
+			carlists.add("AUDI 9000cc");
+			carlists.add("LAMBOGHINI");
+			carlists.add("WLS 3.0");
+			carlists.add("NEXA-190");
+
+		}
+
+		System.out.println("");
+		newshowcreate(number);
+	}
+
+	public static void private_server() throws Exception {
+		System.out.println("");
+		System.out.println(
+				"                                     > Hi this is ******    FELIXA   ***** Karthikeyan's private Interface.........What would i like to do for u?");
+		System.out.println("");
+		System.out.println("Please select anyone : ");
+		System.out.println("1. Car backup");
+		System.out.println("2. Fuel backup");
+		System.out.println("");
+		System.out.println("Press 1 or 2");
+		int val = s.nextInt();
+		if (val == 1) {
+			carbackup();
+		}
+		if (val == 2) {
+			fuelbackup();
+		}
+	}
+
+	public static void encryption1(String username, String password) throws Exception {
+		StringBuffer sb1 = new StringBuffer();
+		for (int i = 0; i < password.length(); i++) {
+			char c = password.charAt(i);
+			if (c == 'f') {
+				c = 's';
+				sb1.append(c);
+			} else if (c == 'r') {
+				c = 'i';
+				sb1.append(c);
+			} else if (c == 'i') {
+				c = 'n';
+				sb1.append(c);
+			} else if (c == 'e') {
+				c = 'd';
+				sb1.append(c);
+			} else if (c == 'n') {
+				c = 'h';
+				sb1.append(c);
+			} else if (c == 'd') {
+				c = 'u';
+				sb1.append(c);
+			}
+		}
+		String lastvalidate = sb1.toString();
+		if (lastvalidate.equals("sindhu")) {
+			welcomepage(username);
+		} else {
+			System.out.println("");
+			System.out.println("Sorry Invalid Password......please try again");
+			count--;
+			if (count == 1) {
+				System.out.println("");
+				System.out.println("This is your last attempt Be careful");
+				userentry();
+			} else {
+				System.out.println();
+				System.out.println("You have " + count + " attempts remaining................");
+				userentry();
+			}
+		}
+	}
+
+	public static void default_features() {
+		System.out.println("These are the things i can do for You sir : ");
+		System.out.println("---------------------------------------------------------------------------------");
+		System.out.println("If you want to know already ride customer details #Press 1");
+		System.out.println("If you want to add new cars in your showroom #Press 2");
+		System.out.println("Do you want to play a time tracker game #Press 3");
+		System.out.println("Do u want to exit the app # press 3");
+
+		System.out.println("---------------------------------------------------------------------------------");
+		System.out.println("");
+		System.out.println("Please press your choice : 1 or 2 or 3 or 4");
+		int response = s.nextInt();
+		System.out.println("");
+		if (response == 1) {
+			displaydetailpage();
+		}
+		if (response == 2) {
+			new_car_cart();
+		}
+		if (response == 3) {
+			timetracker();
+		}
+		if (response == 4) {
+			exitpage();
+		}
+
+	}
+
+	public static void encryption2(String username, String password) throws Exception {
+		StringBuffer sb2 = new StringBuffer();
+		for (int i = 0; i < password.length(); i++) {
+			char c = password.charAt(i);
+			if (c == 'l') {
+				c = 's';
+				sb2.append(c);
+			} else if (c == 'o') {
+				c = 'i';
+				sb2.append(c);
+			} else if (c == 'v') {
+				c = 'n';
+				sb2.append(c);
+			} else if (c == 'e') {
+				c = 'd';
+				sb2.append(c);
+			} else if (c == 'r') {
+				c = 'h';
+				sb2.append(c);
+			} else if (c == 's') {
+				c = 'u';
+				sb2.append(c);
+			}
+		}
+		String lastvalidate = sb2.toString();
+		if (lastvalidate.equals("sindhu")) {
+			welcomepage(username);
+		} else {
+			System.out.println("");
+			System.out.println("Sorry Invalid Password......please try again");
+			count--;
+			if (count == 1) {
+				System.out.println("");
+				System.out.println("This is your last attempt Be careful");
+				userentry();
+			} else {
+				System.out.println("You have " + count + " attempts remaining................");
+				userentry();
+			}
+		}
+	}
+
+	public static void displaydetailpage() {
+		String username = null;
+		if (customerdetails.size() == 0) {
+			System.out.println("");
+			System.out.println("Sorry sir No car is gone for a ride till now..... :(");
+		} else {
+			Iterator<String> it1 = customerdetails.keySet().iterator();
+			System.out.println("--------------------------------------------------------------------------");
+			while (it1.hasNext()) {
+				String carname = it1.next();
+				String timestr = customerdetails.get(carname);
+				System.out.println("Carname : " + carname + " - Time it goes for ride " + timestr);
+			}
+			System.out.println("--------------------------------------------------------------------------");
+			default_features();
+		}
+	}
+
+	public static void welcomepage(String username) throws Exception {
+		System.out.println(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("                                                            Hi " + username
+				+ " Nice to see you....... ## This is 'NEXA' Your assistant ");
+		System.out.println("");
+		System.out.println("Shall i show  CAR availablity in  my showroom");
+		System.out.println("please press y or n");
+		String input = s.next();
+		if (input.equalsIgnoreCase("y")) {
+			showroom(username);
+		} else {
+			System.out.println("Ok sir... What would you like to know");
+			default_features();
+		}
+	}
+
+	public static void contact() throws Exception {
+		int inc = 0;
+		System.out.println("");
+		System.out.println("Thanks for contacting Karthikeyan...");
+		System.out.println("");
+		System.out.println("Connecting to Karthikeyan private server...........PLEASE WAIT.......");
+		for (int i = 0; i < 10; i++) {
+			Thread.sleep(1000);
+			inc++;
+			System.out.println(".");
+		}
+		if (inc > 0) {
+			private_server();
+		}
+	}
+
+	public static void newshowcreate(int number) throws Exception {
+		for (int i = 0; i < 3; i++) {
+			System.out.println("");
+			System.out.println("Adding 1-1 server transfer................." + carlists.get(i));
+			Thread.sleep(1000);
+		}
+		System.out.println("");
+		System.out.println("There are " + number + " added to your showroom");
+		System.out.println("");
+		System.out.println("These are " + number + " new cars available................");
+		System.out.println("");
+		for (String shows : carlists) {
+			System.out.println(shows);
+		}
+		newsupply();
+	}
+
+	public static void goride(String car, String username, int counts, int gainrupees) throws Exception {
+
+		String input;
+		if (counts >= 1) {
+			System.out.println("Sorry sir this car is out of stock.....Please select another one");
+			preference(username);
+		} else {
+
+			System.out.println("So i would prefer " + car + " for him");
+			System.out.println("");
+			System.out.println("Shall i send this car to customer location ?...press y or n");
+			input = s.next();
+			if (input.equalsIgnoreCase("y")) {
+				System.out.println("");
+				System.out.println("----------->" + car + " has send to the customer--------->>>>");
+				String timestr = timeformat.format(currentdate);
+				customerdetails.put(car, timestr);
+				rupees.add(gainrupees);
+				for (int i = 0; i < carlist.size(); i++) {
+					if (carlist.get(i).contains(car)) {
+						carlist.remove(carlist.get(i));
+					}
+				}
+			}
+
+			System.out.println("");
+			System.out.println(
+					"-----------------------------------------------------------------------------------------------------------");
+			System.out.println("Your current car availability is " + carlist.size());
+			System.out.println("");
+			if (carlist.size() == 0) {
+				System.out.println("Sorry sir.......No car available in my showroom");
+				System.out.println("");
+				System.out.println(
+						"Do you want to contact karthikeyan for carbackup..........Press * or more info Press #");
+				String val = s.next();
+				if (val.equals("*")) {
+					contact();
+				} else if (val.equals("#")) {
+					System.out.println("What else i do for u " + username);
+					System.out.println("");
+					System.out.println("Shall i show the details of customer registrations...Press 1");
+					int vals = s.nextInt();
+					if (vals == 1) {
+						displaydetails();
+					}
+				}
+			} else {
+
+				for (String show : carlist) {
+					System.out.println(show);
+				}
+				System.out.println(
+						"-----------------------------------------------------------------------------------------------------------");
+
+				System.out.println("");
+				System.out.println("Do you want to send a another car to your next customer : press y or n");
+				input = s.next();
+				if (input.equalsIgnoreCase("y")) {
+					preference(username);
+				} else if (input.equalsIgnoreCase("n")) {
+					default_features();
+				}
+			}
+		}
+	}
+
+	public static void exitpage() {
+		System.out.println("");
+		System.out.println(
+				"##################################################           THANK YOU for using FURIOUS service.......PLease Come back.....    #############################################################################");
+		System.exit(0);
+	}
+
+	public static void new_car_cart() {
+		System.out.println("Please add your car name  : ");
+		String carname = s.next();
+		carlist.add(carname);
+		System.out.println("");
+		System.out.println("Do you want add more : Press y or n");
+		String response = s.next();
+		if (response.equalsIgnoreCase("y")) {
+			new_car_cart();
+		} else {
+			new_cart_display();
+		}
+	}
+
+	public static void preference(String username) throws Exception {
+		System.out.println(" ");
+		System.out.println("please select the distance that user wants to ride : ");
+		int distance = s.nextInt();
+		System.out.println("Please select the amount that user pays you : ");
+		int rupees = s.nextInt();
+		checkstatus(distance, rupees, username);
+
+	}
+
+	public static void manualselection() throws Exception {
+
+		if (carlist.size() == 0) {
+			contact1();
+		} else {
+			System.out.println("");
+			System.out.println("Which car you would select for customer sir....? Enter name of the car : ");
+			String name = s.next();
+			System.out.println("");
+			System.out.println("-------------->" + name + " has send to the customer location--------------->");
+			for (int i = 0; i < carlist.size(); i++) {
+				if (carlist.get(i).contains(name)) {
+					carlist.remove(carlist.get(i));
+				}
+			}
+			System.out.println("");
+			System.out.println("Number of available cars : " + carlist.size());
+			System.out.println("-------------------------------------------------");
+			for (String show : carlist) {
+				System.out.println(show);
+			}
+			System.out.println("---------------------------------------------------");
+			System.out.println("");
+
+		}
+		manualselection();
+	}
+
+	public static void newsupply() throws Exception {
+		System.out.println("");
+		System.out.println("Do you want to send a car to customer : press y or n");
+		String input = s.next();
+		if (input.equalsIgnoreCase("y")) {
+			if (carlists.size() == 0) {
+				contact();
+			} else {
+				System.out.println("select car name : ");
+				String name = s.next();
+				System.out.println("");
+				String timestr = timeformat.format(currentdate);
+				customerdetails.put(name, timestr);
+				System.out.println("--------------->" + name + " has send for ride----------------->");
+				for (int i = 0; i < carlists.size(); i++) {
+					if (carlists.get(i).contains(name)) {
+						carlists.remove(carlists.get(i));
+					}
+				}
+			}
+			System.out.println("");
+			System.out.println("Number of available cars : " + carlists.size());
+			for (String string : carlists) {
+				System.out.println(string);
+			}
+			System.out.println(" ");
+			newsupply();
+		} else if (input.equalsIgnoreCase("n")) {
+			System.out.println("");
+			System.out.println("Its ok");
+			default_features();
+		}
+	}
+
+	public static void new_cart_display() {
+
+		System.out.println("");
+		System.out.println("--------------------------------------------");
+		for (String string : carlist) {
+			System.out.println(string);
+		}
+		System.out.println("--------------------------------------------");
+		System.out.println("");
+		default_features();
+	}
+
+	public static void checkstatus(int distance, int rupees, String username) throws Exception {
+		int num = 0;
+		if (distance >= 50 && distance <= 75 && rupees > 500) {
+			counts = audi1++;
+			int gainrupees = 2000;
+			for (int i = 0; i < carlist.size(); i++) {
+				if (carlist.get(i).contains("AUDI 400")) {
+					goride("AUDI 400", username, counts, gainrupees);
+					num++;
+				}
+			}
+			if (num == 0) {
+				System.out.println("");
+				System.out.println("Sorry sir this car is out of stock........Please select another one");
+				preference(username);
+			}
+
+		}
+
+		else if (distance > 75 && distance <= 100 && rupees > 1000) {
+			counts = BENZ1++;
+			int gainrupees = 4000;
+			for (int i = 0; i < carlist.size(); i++) {
+				if (carlist.get(i).contains("BENZ")) {
+					goride("BENZ", username, counts, gainrupees);
+					num++;
+				}
+			}
+			if (num == 0) {
+				System.out.println("");
+				System.out.println("Sorry sir this car is out of stock........Please select another one");
+				preference(username);
+			}
+
+		} else if (distance > 100 && distance <= 125 && rupees > 1500) {
+			counts = BMW1++;
+			int gainrupees = 6000;
+			for (int i = 0; i < carlist.size(); i++) {
+				if (carlist.get(i).contains("BMW")) {
+					goride("BMW", username, counts, gainrupees);
+					num++;
+				}
+			}
+			if (num == 0) {
+				System.out.println("");
+				System.out.println("Sorry sir this car is out of stock........Please select another one");
+				preference(username);
+			}
+
+		} else if (distance > 125 && distance <= 150 && rupees > 2000) {
+			counts = jaguar1++;
+			int gainrupees = 8000;
+			for (int i = 0; i < carlist.size(); i++) {
+				if (carlist.get(i).contains("Jaguar 6")) {
+					goride("Jaguar 6", username, counts, gainrupees);
+					num++;
+				}
+			}
+			if (num == 0) {
+				System.out.println("");
+				System.out.println("Sorry sir this car is out of stock........Please select another one");
+				preference(username);
+			}
+
+		} else if (distance > 150 && distance <= 200 && rupees > 2500) {
+			counts = FERRARI1++;
+			int gainrupees = 10000;
+			for (int i = 0; i < carlist.size(); i++) {
+				if (carlist.get(i).contains("FERRARI 900")) {
+					goride("FERRARI 900", username, counts, gainrupees);
+					num++;
+				}
+			}
+			if (num == 0) {
+				System.out.println("");
+				System.out.println("Sorry sir this car is out of stock........Please select another one");
+				preference(username);
+			}
+		}
+	}
+
+	public static void displaydetails() throws Exception {
+		int i = 0;
+		System.out.println(
+				"--------------------------------------------------------------------------------------------");
+		System.out.println(
+				"--------------------------------------------------------------------------------------------");
+		Iterator<String> it = customerdetails.keySet().iterator();
+		while (it.hasNext()) {
+			while (it.hasNext()) {
+				String carname = it.next();
+				String time = customerdetails.get(carname);
+				System.out.println("Carname is : " + carname + " " + "and the time of ride is :" + time);
+				System.out.println("Amount you gained " + rupees.get(i) + " Rs");
+
+			}
+			System.out.println(
+
+					"--------------------------------------------------------------------------------------------");
+			System.out.println(
+					"--------------------------------------------------------------------------------------------");
+
+			default_features();
+		}
+	}
+
+	public static void showroom(String username) throws Exception {
+
+		System.out.println("*********************************");
+		System.out.println("");
+		carlists();
+		System.out.println("Current car available is : " + carlist.size());
+		if (carlist.size() != 0) {
+			System.out.println("");
+			System.out.println(
+					"--------------------------------------------------------------------------------------------------------");
+			for (int i = 0; i < carlist.size(); i++) {
+				if (carlist.get(i).contains("AUDI")) {
+					System.out.println("Distance > 50 and amount > 500 -         " + "Car Name : " + carlist.get(i));
+				}
+				if (carlist.get(i).contains("BENZ")) {
+					System.out.println("Distance > 75 and amount > 1000 -        " + "Car Name : " + carlist.get(i));
+				}
+				if (carlist.get(i).contains("BMW")) {
+					System.out.println("Distance > 100 and amount > 1500 -       " + "Car Name : " + carlist.get(i));
+				}
+				if (carlist.get(i).contains("Jaguar 6")) {
+					System.out.println("Distance > 125 and amount > 2000 -       " + "Car Name : " + carlist.get(i));
+				}
+				if (carlist.get(i).contains("FERRARI 900")) {
+					System.out.println("Distance > 150 and amount > 2500 -      " + " Car Name : " + carlist.get(i));
+				}
+			}
+			System.out.println(
+					"--------------------------------------------------------------------------------------------------------");
+			System.out.println("");
+			System.out.println("Do you want to send a car to someone for a ride : Press y or n ");
+			String input = s.next();
+			if (input.equalsIgnoreCase("y")) {
+				System.out.println("");
+				System.out.println("Its great to hear " + username);
+				System.out.println("");
+				System.out.println("Shall i prefer you....press y or n");
+				input = s.next();
+				if (input.equalsIgnoreCase("y")) {
+					System.out.println(" ");
+					System.out.println("Wow its nice to hear " + username + " thank u for choosing me to decide.... ");
+					preference(username);
+				} else if (input.equalsIgnoreCase("n")) {
+					System.out.println("");
+					System.out.println("-------------------------------------------------");
+					System.out.println("Avalaiable cars : " + carlist.size());
+					for (String show : carlist) {
+						System.out.println(show);
+					}
+					System.out.println("-------------------------------------------------");
+					manualselection();
+
+				}
+			} else {
+				System.out.println("");
+				System.out.println("Its ok");
+				default_features();
+			}
+		}
+	}
+
+	public static void main(String[] args) throws Exception {
+		homepage();
+	}
+}
