@@ -1,0 +1,394 @@
+package com.demo.access;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class accessportal {
+	static Scanner s = new Scanner(System.in);
+	static String sqlname = "com.mysql.jdbc.Driver";
+	static String url = "jdbc:mysql://localhost:3306/mysql";
+	static String username = "root";
+	static String password = "root";
+	static int met = 0;
+	static int inc = 0;
+	static int fnum = 0;
+	static int lnum = 0;
+	static String start_query = "select * from interns";
+	static String insert_query = "select * from track_records";
+	static String question_query = "select * from queries";
+	static int count = 3;
+	static HashMap<String, String> userfetcher = new HashMap<String, String>();
+	static StringBuilder builder1 = new StringBuilder();
+	static StringBuilder builder2 = new StringBuilder();
+	static List<Integer> ids = new ArrayList<Integer>();
+	static List<String> odc = new ArrayList<String>();
+	static SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+	static List<String> totaltime = new ArrayList<String>();
+	static Date curdate = new Date();
+
+	public static void userdetails() throws Exception {
+		if (count == 1) {
+			System.out.println("");
+			System.out.println("Final attempt.....");
+		}
+		if (count == 0) {
+			System.out.println("Account locked......................Please contact Karthikeyan to unlock");
+			System.out.println("");
+			System.out.println("If u want to contact karthikeyan Press 1");
+			System.out.println("");
+			System.out.println("Waiting for user input : ");
+			int input = s.nextInt();
+			unlock(input);
+
+		} else {
+			System.out.println(
+					">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Welcome <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+			System.out.println("");
+			System.out.println("Please Enter ur access id");
+			int userid = s.nextInt();
+			System.out.println("");
+			accessValidation(userid);
+		}
+	}
+
+	public static void tracktime(String odcname, String name) throws Exception {
+		if (odcname.equalsIgnoreCase("odc-3")) {
+			String dynamic_query = "insert into track_records values(?,?,?)";
+			Class.forName(sqlname);
+			Connection connect = DriverManager.getConnection(url, username, password);
+			Statement statement = connect.createStatement();
+			ResultSet result = statement.executeQuery(insert_query);
+			PreparedStatement preparestmt = connect.prepareStatement(dynamic_query);
+			String odname = odcname;
+			String time = formatter.format(curdate);
+			String status = "REJECTED";
+			preparestmt.setString(1, odname);
+			preparestmt.setString(2, time);
+			preparestmt.setString(3, status);
+			totaltime.add(time);
+			int update = preparestmt.executeUpdate();
+			System.out.println("");
+			System.out.println("Sorry Sir You are nor authorized......!! Please select different one");
+			display_ODC(name);
+		} else {
+			String dynamic_query = "insert into track_records values(?,?,?)";
+			Class.forName(sqlname);
+			Connection connect = DriverManager.getConnection(url, username, password);
+			Statement statement = connect.createStatement();
+			ResultSet result = statement.executeQuery(insert_query);
+			PreparedStatement preparestmt = connect.prepareStatement(dynamic_query);
+			String odname = odcname;
+			String stime = formatter.format(curdate);
+			String status = "APPROVED";
+			preparestmt.setString(1, odname);
+			preparestmt.setString(2, stime);
+			totaltime.add(stime);
+			preparestmt.setString(3, status);
+
+			int update = preparestmt.executeUpdate();
+			System.out.println("");
+			System.out.println("Ur entry is Updated in our server.....................");
+			System.out.println("");
+			System.out.println("Do u want to go any odc.....Press 1  OR Do you want to see any other features press 2");
+			int response = s.nextInt();
+			if (response == 1) {
+				display_ODC(odname);
+			} else if (response == 2) {
+				default_screen(name);
+			}
+
+		}
+
+	}
+
+	public static void welcomepage(String uname, String cname) throws Exception {
+		System.out.println("");
+		System.out.println(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println(
+				"                                                                                        Hello "
+						+ uname.toUpperCase() + " Welcome to " + cname);
+		System.out.println(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		available_ODCS(uname);
+	}
+
+	public static void accessValidation(int userid) throws Exception {
+		Class.forName(sqlname);
+		Connection connect = DriverManager.getConnection(url, username, password);
+		Statement statement = connect.createStatement();
+		ResultSet result = statement.executeQuery(start_query);
+		while (result.next()) {
+			int getid = result.getInt("internid");
+			ids.add(getid);
+		}
+		for (int i = 0; i < ids.size(); i++) {
+			int getid = ids.get(i);
+			if (getid == userid) {
+				met++;
+			}
+		}
+		if (met > 0) {
+			displaydetails(userid);
+		} else {
+			System.out.println("Sorry ur not accessible to this center.............Please try again");
+			System.out.println("");
+			count--;
+			userdetails();
+		}
+
+	}
+
+	public static void default_screen(String name) throws Exception, Exception {
+		System.out.println(
+				"------------------------------------------------------------------------------------------------------");
+		System.out.println("");
+		System.out.println("These are all automation Things i can do for you Sir........!!! ");
+		System.out.println("");
+		System.out.println("Do you wan to show local copy of database......Press * ");
+		System.out.println(" ");
+		System.out.println("Do you want to contact karthikeyan for somehelp....Press # ");
+		System.out.println("");
+		System.out.println("Do you want to final swipe out and diaplay the Total time of yours....Press @ ");
+		System.out.println("");
+		System.out.println(
+				"------------------------------------------------------------------------------------------------------");
+		System.out.println("");
+		System.out.println("Waiting for your response");
+		String response = s.next();
+		if (response.equals("*")) {
+			localcopy(name);
+		}
+		if (response.equals("#")) {
+			dialler(name);
+		}
+		if (response.equals("@")) {
+			swipe_out(name);
+		}
+
+	}
+
+	public static void available_ODCS(String name) throws Exception {
+		if (name.equalsIgnoreCase("sai")) {
+			odc.add("ODC-1");
+			odc.add("ODC-2");
+			odc.add("ODC-3");
+			odc.add("Cafeteria");
+			display_ODC(name);
+		} else if (name.equalsIgnoreCase("karthikeyan")) {
+			odc.add("Sector 1");
+			odc.add("Sector 2");
+			odc.add("Sector 3");
+			odc.add("Cafeteria");
+			display_ODC(name);
+		}
+
+	}
+
+	public static void localcopy(String name) throws Exception {
+		Class.forName(sqlname);
+		Connection connect = DriverManager.getConnection(url, username, password);
+		Statement statement = connect.createStatement();
+		ResultSet result = statement.executeQuery(insert_query);
+		System.out.println("ODC-Name :         ODC-time :                     ODC-Status");
+		while (result.next()) {
+			String odcname = result.getString("ODC_Name");
+			String odctime = result.getString("ODC_Time");
+			String status = result.getString("status");
+			System.out.println(odcname + "                  " + odctime + "                      " + status);
+
+		}
+		default_screen(name);
+	}
+
+	public static void seperator(String cmpname, String usrname) throws Exception {
+		String unum = null;
+		String uname = null;
+		String cpnum = null;
+		String cpname = null;
+		StringTokenizer stn = new StringTokenizer(usrname, "-");
+		while (stn.hasMoreTokens()) {
+			unum = stn.nextToken();
+			uname = stn.nextToken();
+		}
+		StringTokenizer stn2 = new StringTokenizer(cmpname, "+");
+		{
+			while (stn2.hasMoreTokens()) {
+				cpnum = stn2.nextToken();
+				cpname = stn2.nextToken();
+			}
+		}
+
+		welcomepage(uname, cpname);
+
+	}
+
+	public static void display_result(String first_time, String last_time) throws Exception {
+		System.out.println("");
+		System.out.println("-----------------------------------------------------");
+		System.out.println("Your login hours are: " + first_time + " upto " + last_time);
+		System.out.println("");
+		System.out.println(
+				"....................................................GOODBYE.......................................................");
+		System.exit(0);
+	}
+
+	public static void dialler(String name) throws Exception {
+		System.out.println(
+				"................................Hi  This is >>> FELIXA <<<<  Karthikeyan's Privates Interface...............................................");
+		System.out.println("");
+
+		add_question(name);
+	}
+
+	public static void add_question(String name) throws Exception {
+		String question = null;
+		inc++;
+		String type_question_query = "insert into queries values(?)";
+		if (inc == 1) {
+			System.out.println("Please register your name");
+			String urname = s.next();
+			System.out.println("");
+			System.out.println(
+					"Hello " + urname + " Please type your queries WITHOUT SPACES...Waiting for your response");
+
+			System.out.println("");
+			question = s.next();
+			Connection connect = DriverManager.getConnection(url, username, password);
+			Statement statement = connect.createStatement();
+			ResultSet result = statement.executeQuery(question_query);
+			PreparedStatement preparestmt = connect.prepareStatement(type_question_query);
+			preparestmt.setString(1, question);
+			int update = preparestmt.executeUpdate();
+			System.out.println("Do u want to type any more queries ? press 1 (OR) Return to home page Press 2");
+			int num = s.nextInt();
+			System.out.println("");
+			if (num == 1) {
+				add_question(name);
+			}
+			if (num == 2) {
+				System.out.println("");
+				System.out.println("Contacting Karthikeyans private server...Please wait...");
+				for (int i = 0; i < 10; i++) {
+					Thread.sleep(1000);
+					System.out.println(".");
+				}
+				System.out.println(
+						"-------->>> Your Queries are send to Karthikeyan's private DB......It will be resolved soon... :) ");
+				System.out.println("");
+				default_screen(name);
+			}
+
+		} else {
+			System.out.println("");
+			question = s.next();
+			Connection connect = DriverManager.getConnection(url, username, password);
+			Statement statement = connect.createStatement();
+			ResultSet result = statement.executeQuery(question_query);
+			PreparedStatement preparestmt = connect.prepareStatement(type_question_query);
+			preparestmt.setString(1, question);
+			int update = preparestmt.executeUpdate();
+			System.out.println("Do u want to type any more queries ? press 1 (OR) Return to home page Press 2");
+			int num = s.nextInt();
+			System.out.println("");
+			if (num == 1) {
+				add_question(name);
+			}
+			if (num == 2) {
+				System.out.println("");
+				System.out.println("Contacting Karthikeyans private server...Please wait...");
+				for (int i = 0; i < 10; i++) {
+					Thread.sleep(1000);
+					System.out.println(".");
+				}
+				System.out.println(
+						"-------->>> Your Queries are send to Karthikeyan's private DB......It will be resolved soon... :) ");
+				System.out.println("");
+				default_screen(name);
+			}
+		}
+	}
+
+	public static String removing_char(String question) {
+		String correction = question.replaceAll(" ", "");
+		return correction;
+
+	}
+
+	public static void display_ODC(String name) throws Exception {
+		System.out.println("");
+		System.out.println("Your available ODCs are");
+		for (int i = 0; i < odc.size(); i++) {
+			System.out.println(odc.get(i));
+		}
+		System.out.println("");
+		System.out.println("Which ODC You want to access : Please enter the name of ODC");
+		String response = s.next();
+		System.out.println("");
+		for (int i = 0; i < odc.size(); i++) {
+			if (response.equalsIgnoreCase(odc.get(i))) {
+				String odcname = odc.get(i);
+				tracktime(odcname, name);
+			}
+		}
+
+	}
+
+	public static void swipe_out(String name) throws Exception {
+		int number = totaltime.size() - 1;
+		String first_time = totaltime.get(0);
+		String last_time = totaltime.get(number);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		Date d1 = format.parse(first_time);
+		Date d2 = format.parse(last_time);
+		long difference = d2.getTime() - d1.getTime();
+		long seconds = difference / 1000;
+		long minute = seconds / 60;
+		long sec = seconds % 60;
+		display_result(first_time, last_time);
+	}
+
+	public static void unlock(int input) throws Exception {
+		if (input == 1) {
+			count = 3;
+			userdetails();
+		} else {
+			System.out.println("");
+			System.out.println("----------------------------------------------------------------");
+			System.out.println("Sorry......Good bye....");
+			System.exit(0);
+		}
+	}
+
+	public static void displaydetails(int userid) throws Exception {
+		Class.forName(sqlname);
+		Connection connect = DriverManager.getConnection(url, username, password);
+		Statement statement = connect.createStatement();
+		ResultSet result = statement.executeQuery(start_query);
+		while (result.next()) {
+			int getid = result.getInt("internid");
+			if (userid == getid) {
+				String name = result.getString("first_name");
+				String compname = result.getString("company_name");
+				builder1.append(getid).append("+").append(compname);
+				builder2.append(getid).append("-").append(name);
+			}
+		}
+
+		seperator(builder1.toString(), builder2.toString());
+	}
+
+	public static void main(String[] args) throws Exception {
+		userdetails();
+	}
+}
