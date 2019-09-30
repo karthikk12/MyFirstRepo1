@@ -1,0 +1,165 @@
+package com.training;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class SendMail {
+	static int count = 50;
+	static int send_count = 1;
+	static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	static Date date = new Date();
+	static int Balance = 100;
+	static Scanner s = new Scanner(System.in);
+	static String password = null;
+
+	public static void starts() {
+		System.out.println("");
+		System.out.println("Enter your user name");
+		String username = s.nextLine();
+		System.out.println("");
+		System.out.println("Enter your secret id : ");
+		String secret_id = s.nextLine();
+		String value = verification(username, secret_id);
+		if (StringUtils.equals(value, "positive")) {
+			mailintro();
+		} else {
+			System.out.println("");
+			System.out.println("!!!------------Invalid Credentials-----------!!!!");
+			System.out.println("");
+			starts();
+		}
+	}
+
+	public static String verification(String username, String secret_id) {
+		StringBuilder sb = new StringBuilder();
+		int max = 0;
+		char[] bytes = secret_id.toCharArray();
+		int length = secret_id.length();
+		if (length < 7 || length > 7) {
+			return "negative";
+		} else {
+			if (secret_id.charAt(0) == '*') {
+				sb.append((char) ('z' - 25));
+				max++;
+			}
+			if (secret_id.charAt(1) == 'y') {
+				sb.append((char) ('g' + 11));
+				max++;
+			}
+			if (secret_id.charAt(2) == 'i') {
+				sb.append((char) ('e' - 2));
+				max++;
+			}
+			if (secret_id.charAt(3) == 'h') {
+				sb.append((char) ('l' - 4));
+				max++;
+			}
+			if (secret_id.charAt(4) == 'b') {
+				sb.append((char) ('y' - 24));
+				max++;
+			}
+			if (secret_id.charAt(5) == 'd') {
+				sb.append((char) ('w' - 9));
+				max++;
+			}
+			if (secret_id.charAt(6) == 'm') {
+				sb.append((char) ('x' - 23));
+				max++;
+			}
+			if (max == 7) {
+				return "positive";
+
+			} else {
+				return "negative";
+			}
+
+		}
+
+	}
+
+	public static void mailintro() {
+		System.setProperty("webdriver.gecko.driver", "C:\\geckodriver-v0.25.0-win32\\geckodriver.exe");
+		String url = "https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&osid=1&service=mail&ss=1&ltmpl=default&rm=false&flowName=GlifWebSignIn&flowEntry=ServiceLogin";
+
+		WebDriver driver = new FirefoxDriver();
+
+		driver.get(url);
+
+		try {
+
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//input[@id='identifierId']")).sendKeys("karthikeyan3896@gmail.com");
+
+			driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+			Thread.sleep(3000);
+
+			driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys("ur_gmail_password");
+			driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+			call(driver);
+
+		} catch (Exception e) {
+
+		}
+	}
+
+	public static void call(WebDriver driver) {
+
+		try {
+			String condate = sdf.format(date);
+			for (int j = 0; j < 50; j++) {
+				Thread.sleep(20000);
+				driver.findElement(By.cssSelector(".aic .z0 div")).click();
+				Thread.sleep(1000);
+
+				driver.findElement(By.cssSelector(".oj div textarea")).sendKeys("crazyshibi@gmail.com ");
+				Thread.sleep(2000);
+				driver.findElement(By.name("subjectbox")).sendKeys("! WARNING !");
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div"))
+						.sendKeys("ALERT.....!!! Karthikeyan injected your messages " + count + " remaining " + " ( "
+								+ condate + " ) " + " Amount WithDrawn - " + Balance);
+
+				driver.findElement(By.cssSelector(".btC td:nth-of-type(1) div div:nth-of-type(2) div")).click();
+
+				System.out.println(
+						"Message Send Successfully........................... " + "Sent count : " + send_count);
+				count--;
+				send_count++;
+				Balance = Balance + 100;
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error Occurred : " + e);
+			call(driver);
+		}
+		System.out.println("");
+		System.out.println("");
+		System.out.println("Total message sent " + send_count);
+		System.exit(0);
+	}
+
+	public static void main(String[] args) throws Exception {
+		int val = 0;
+		for (int i = 0; i < i + 1; i++) {
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+
+			String condate = sdf.format(date);
+
+			if (condate.equals("09:12:00")) {
+				val++;
+			}
+			if (val == 1) {
+				starts();
+			}
+		}
+	}
+}
