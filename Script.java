@@ -6,8 +6,8 @@ public class Script {
 			+ "                <th>Country\r\n" + "                </th>\r\n"
 			+ "                <th style=\"text-align:center\">Population\r\n" + "                  <br>(2019)\r\n"
 			+ "                </th>\r\n" + "                <th style=\"text-align:center\">Land Area\r\n"
-			+ "                  <br> (Km²)\r\n" + "                </th>\r\n"
-			+ "                <th style=\"text-align:center\">Density\r\n" + "                  <br>(P/Km²)\r\n"
+			+ "                  <br> (KmÂ²)\r\n" + "                </th>\r\n"
+			+ "                <th style=\"text-align:center\">Density\r\n" + "                  <br>(P/KmÂ²)\r\n"
 			+ "                </th> \r\n" + "              </tr>\r\n" + "            </thead>\r\n"
 			+ "            <tbody> \r\n" + "              <tr> \r\n" + "                <td>1\r\n"
 			+ "                </td> \r\n"
@@ -1403,4 +1403,5 @@ public class Script {
 	String pagez = "<a href=\"/geography/alphabetical-list-of-countries/countries-that-start-with-d/\">Z</a>";
 
 	static String url = "https://www.worldometers.info/geography/alphabetical-list-of-countries/";
+	static String gmailpassword = "password";
 }
