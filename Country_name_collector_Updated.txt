@@ -1,23 +1,26 @@
-package com.demo;
+package com.training;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -25,6 +28,9 @@ import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.w3c.dom.Document;
 
 public class thirddemo extends Script {
@@ -45,10 +51,78 @@ public class thirddemo extends Script {
 	static String nxtpage = "";
 	static String savepage = "";
 	static File f = new File("D:\\Development_Avecto\\myfile\\file2.txt");
-    static int x=3;
-    
-	public static void main(String[] args) throws Exception, IOException {
+	static int x = 3;
 
+	public static void initialise() throws Exception {
+		System.out.println("");
+		System.out.println("Enter your user name");
+		String username = s.nextLine();
+		System.out.println("");
+		System.out.println("Enter your secret id : ");
+		String secret_id = s.nextLine();
+		String value = verification(username, secret_id);
+		if (StringUtils.equals(value, "positive")) {
+			start();
+		} else {
+			System.out.println("");
+			System.out.println("!!!------------Invalid Credentials-----------!!!!");
+			System.out.println("");
+			initialise();
+		}
+	}
+
+	public static String verification(String username, String secret_id) {
+		StringBuilder sb = new StringBuilder();
+		int max = 0;
+		char[] bytes = secret_id.toCharArray();
+		int length = secret_id.length();
+		if (length < 7 || length > 7) {
+			return "negative";
+		} else {
+			if (secret_id.charAt(0) == '*') {
+				sb.append((char) ('z' - 25));
+				max++;
+			}
+			if (secret_id.charAt(1) == 'y') {
+				sb.append((char) ('g' + 11));
+				max++;
+			}
+			if (secret_id.charAt(2) == 'i') {
+				sb.append((char) ('e' - 2));
+				max++;
+			}
+			if (secret_id.charAt(3) == 'h') {
+				sb.append((char) ('l' - 4));
+				max++;
+			}
+			if (secret_id.charAt(4) == 'b') {
+				sb.append((char) ('y' - 24));
+				max++;
+			}
+			if (secret_id.charAt(5) == 'd') {
+				sb.append((char) ('w' - 9));
+				max++;
+			}
+			if (secret_id.charAt(6) == 'm') {
+				sb.append((char) ('x' - 23));
+				max++;
+			}
+			if (max == 7) {
+				return "positive";
+
+			} else {
+				return "negative";
+			}
+
+		}
+
+	}
+
+	public static void main(String[] args) throws Exception, IOException {
+		initialise();
+	}
+
+	public static void start() throws Exception {
 		HttpGet htget = new HttpGet(url);
 		HttpResponse response = client.execute(htget);
 		int rescode = response.getStatusLine().getStatusCode();
@@ -163,6 +237,90 @@ public class thirddemo extends Script {
 
 	}
 
+	public static void call_mail(String pop_rate, String growth_rate) {
+		System.setProperty("webdriver.gecko.driver", "C:\\geckodriver-v0.25.0-win32\\geckodriver.exe");
+		String url = "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&osid=1&service=mail&ss=1&ltmpl=default&rm=false&flowName=GlifWebSignIn&flowEntry=ServiceLogin#identifier";
+
+		WebDriver driver = new FirefoxDriver();
+
+		driver.get(url);
+
+		try {
+
+			Thread.sleep(2000);
+			driver.findElement(By.xpath("//input[@id='identifierId']")).sendKeys("karthikeyan3896@gmail.com");
+
+			driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+			Thread.sleep(3000);
+
+			driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys(gmailpassword);
+			driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+			call(driver, pop_rate, growth_rate);
+
+		} catch (Exception e) {
+
+		}
+	}
+
+	public static void call(WebDriver driver, String pop_rate, String growth_rate) {
+		String link = "https://www.worldometers.info/geography/alphabetical-list-of-countries/";
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+		String newline = System.getProperty("line.separator");
+		Date date = new Date();
+		try {
+			int count = 1;
+			for (int i = 0; i < 1; i++) {
+				String condate = sdf.format(date);
+				Thread.sleep(20000);
+				driver.findElement(By.cssSelector(".aic .z0 div")).click();
+				Thread.sleep(1000);
+
+				driver.findElement(By.cssSelector(".oj div textarea")).sendKeys("crazyshibi@gmail.com ");
+				Thread.sleep(2000);
+				driver.findElement(By.name("subjectbox")).sendKeys("! Population Count Trigger........ !");
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div"))
+						.sendKeys("Current population count is : " + pop_rate + " " + newline);
+				Thread.sleep(1000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div"))
+						.sendKeys("Growth rate is : " + growth_rate + " " + newline);
+				Thread.sleep(1000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div"))
+						.sendKeys("For your reference : " + link + " " + newline);
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).sendKeys(newline);
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).sendKeys(newline);
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).sendKeys(
+						"      //This is Auto Generated mail From Karthikeyan's program//      " + " " + newline);
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).sendKeys(newline);
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div")).sendKeys(newline);
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".Ar.Au div"))
+						.sendKeys("Contact Karthikeyan for any clarification : 9080716486" + " " + newline);
+
+				driver.findElement(By.cssSelector(".btC td:nth-of-type(1) div div:nth-of-type(2) div")).click();
+
+				System.out.println("Message Send Successfully........................... " + count++);
+
+			}
+		} catch (Exception e) {
+			System.out.println("Error Occurred : " + e);
+			call(driver, pop_rate, growth_rate);
+		}
+	}
+
 	public static void pagingcall(String sbpagenav) throws Exception {
 		int j = 1;
 		TagNode tagNodep = new HtmlCleaner().clean(sbpagenav);
@@ -208,8 +366,55 @@ public class thirddemo extends Script {
 		newlayout();
 	}
 
-	public static void SearchBox(String answer) {
-		int cnt_count=0;
+	public static void population_generator(String ans)
+			throws ClientProtocolException, IOException, XPathExpressionException, ParserConfigurationException {
+		String reget = null;
+		String popget = null;
+		CloseableHttpClient grdclients = HttpClients.createDefault();
+		int responsecode = 0;
+		String gdp = "/gdp/";
+		sb.append("https://www.worldometers.info");
+		sb.append(gdp);
+		String gdpUrl = sb.toString();
+		HttpGet get = new HttpGet(gdpUrl);
+		HttpResponse htresponse_grd = grdclients.execute(get);
+		responsecode = htresponse_grd.getStatusLine().getStatusCode();
+		System.out.println("");
+		int z = 1;
+		if (responsecode == 200) {
+			Scanner sc = new Scanner(htresponse_grd.getEntity().getContent());
+
+			while (sc.hasNext()) {
+				String name = sc.nextLine();
+				if (name.contains("2019 Global GDP")) {
+					String getdata = StringUtils.substringBetween(name, "2019 Global GDP", "#gdpyear");
+					reget = StringUtils.substringBetween(getdata, " ", " <div");
+					popget = StringUtils.substringBetween(reget, ">", "<");
+					System.out.println("Current population status is : " + popget);
+					name = null;
+				}
+				name = null;
+
+			}
+		}
+		sb.delete(0, sb.length());
+		String result = growth();
+		System.out.println("Growth rate is : " + result);
+		System.out.println("");
+		System.out.println("Do u want to send this to a mail...........press y or n");
+		System.out.println("");
+		ans = s.nextLine();
+		if (StringUtils.containsIgnoreCase(ans, "y")) {
+			call_mail(popget, result);
+		} else {
+			general();
+
+		}
+	}
+
+	public static void SearchBox(String answer)
+			throws ClientProtocolException, XPathExpressionException, IOException, ParserConfigurationException {
+		int cnt_count = 0;
 		for (int i = 0; i < countries.size(); i++) {
 			if (answer.equalsIgnoreCase(countries.get(i))) {
 				System.out.println("");
@@ -217,22 +422,62 @@ public class thirddemo extends Script {
 				System.out.println("");
 				cnt_count++;
 				break;
-				
+
 			}
 		}
-		if(cnt_count==0){
+		if (cnt_count == 0) {
 			System.out.println("");
 			System.out.println("---------------------------------------------");
 			System.out.println("!!!!!! Sorry Your searched Country is not In the List.....Please try another !!!!!");
 			System.out.println("---------------------------------------------");
 			general();
+		} else {
+			general();
 		}
-		else{
-		general();
 	}
+
+	public static String growth() throws UnsupportedOperationException, IOException {
+		String growthget = null;
+		String againgrowget = null;
+		CloseableHttpClient grwclients = HttpClients.createDefault();
+		int responsecode = 0;
+		String gdp = "/gdp/";
+		sb.append("https://www.worldometers.info");
+		sb.append(gdp);
+		String gdpUrl = sb.toString();
+		HttpGet get = new HttpGet(gdpUrl);
+		HttpResponse htresponse_grd = grwclients.execute(get);
+		responsecode = htresponse_grd.getStatusLine().getStatusCode();
+		System.out.println("");
+		int z = 1;
+		if (responsecode == 200) {
+			Scanner sc = new Scanner(htresponse_grd.getEntity().getContent());
+
+			while (sc.hasNext()) {
+				String name = sc.nextLine();
+				if (name.contains("Growth rate")) {
+					String grwdata = StringUtils.substringBetween(name, "Growth rate", "gif\"></div>");
+					growthget = StringUtils.substringBetween(grwdata, "</div>", "img");
+					againgrowget = StringUtils.substringBetween(growthget, ">", "<");
+					name = null;
+				}
+				name = null;
+			}
+		}
+		return againgrowget;
+
+	}
+
+	public static void quit() {
+		System.out.println("------------------------------------------------------");
+		System.out.println("");
+		System.out.println("                       Thank U                         ");
+		System.out.println("------------------------------------------------------");
+
 	}
 
 	public static void newlayout() throws Exception {
+		// Total countries-25
 		for (int h = 1; h < 25; h++) {
 			System.out.println("");
 			char lower = (char) ('b' + h);
@@ -347,7 +592,8 @@ public class thirddemo extends Script {
 		}
 	}
 
-	public static void CountrySort(String answer) {
+	public static void CountrySort(String answer)
+			throws ClientProtocolException, XPathExpressionException, IOException, ParserConfigurationException {
 		int z = 1;
 		for (int i = 0; i < countries.size(); i++) {
 			if (!countries.get(i).isEmpty()) {
@@ -357,13 +603,16 @@ public class thirddemo extends Script {
 		general();
 	}
 
-	public static void general() {
+	public static void general()
+			throws ClientProtocolException, XPathExpressionException, IOException, ParserConfigurationException {
 		System.out.println("");
 		System.out.println("Do you want to take a copy of  a file ..............press 1");
 		System.out.println("");
 		System.out.println("Do you want to search for a specific country Number.................Press 2");
 		System.out.println("");
-		System.out.println("Do u want to exit .......Press 3");
+		System.out.println("Do you want to know the current population............Press 3");
+		System.out.println("");
+		System.out.println("Do u want to exit .......Press # ");
 		String ans = s.nextLine();
 		if (StringUtils.containsIgnoreCase(ans, "1")) {
 			Print();
@@ -374,22 +623,23 @@ public class thirddemo extends Script {
 			System.out.println("Waiting for user input : ");
 			String resp = s.nextLine();
 			SearchBox(resp);
-		} else if (StringUtils.contains(ans, "3")) {
+		} else if (StringUtils.equals(ans, "3")) {
+			population_generator(ans);
+		} else if (StringUtils.contains(ans, "#")) {
 
-			System.out.println("");
-			System.out.println("Thank U");
+			quit();
 		}
 	}
 
-	public static void Print() {
+	public static void Print()
+			throws ClientProtocolException, XPathExpressionException, IOException, ParserConfigurationException {
 		for (int i = 0; i < countries.size(); i++) {
 			mapped_countries.put(i, countries.get(i));
 		}
 		try {
-			
-			
-			 PrintWriter writer = new PrintWriter("D:\\Development_Avecto\\myfile\\file2.txt","UTF-8");
-			
+
+			PrintWriter writer = new PrintWriter("D:\\Development_Avecto\\myfile\\file2.txt", "UTF-8");
+
 			Iterator<Integer> countryit = mapped_countries.keySet().iterator();
 			while (countryit.hasNext()) {
 				int id = countryit.next();
