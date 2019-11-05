@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html>
+<body style="background-color:#aaa9ad;">
+<style>
+/* Style the body */
+body {
+  font-family: Arial;
+  margin: 0;
+}
+
+/* Header/Logo Title */
+.header {
+  padding: 10px;
+  text-align: center;
+  background:#4682B4;
+  color: white;
+  font-size: 10px;
+}
+
+/* Page Content */
+.content {padding:20px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+</div>
+
+<h1 style="font-size:35px; color: Black"align="center">Data Mocker</h1></br>
+  <head lang="en">
+  <meta charset="UTF-8">
+  </head>
+
+
+  <form>
+  
+  
+  
+  
+  
+  <h1 style="font-size:20px; " align="center">   <label ><b>Enter your Input :</b></label> <input type="text" name="message"   id="user_input" align="center">  &nbsp &nbsp Email Format: <input type="checkbox"  id="myCheck" align="right" ></br>
+  &nbsp &nbsp &nbsp&nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp&nbsp &nbsp &nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp DOB Format: <input type="checkbox"  id="myCheck2" ></br>
+  
+  
+  
+  
+  
+  
+  <h1 style="font-size:20px; " align="center">   <label ><b>Password : </b></label> <input type="text" name="message"   id="pass_word" align="center"> </br></br>
+  </form>
+
+<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:40px; width:80px"> <font size=7><input type="reset" value="Clear" align="center" style="height:40px; width:80px"><br/><br/></font>
+
+<hr>
+</h1>
+<h1 style="font-size:20px; " align="center">  
+<style>
+p.ex1 {
+  margin-left: 70%;
+}
+</style>
+  <label >Mocked Result: </label>
+    </h1>
+    </br>
+ <h1 style="font-size:20px; " align="left">    
+
+
+  <p>Mocked Email_id/ DOB/User Input : <span id='display'></span></p>
+  
+  <p>Mocked Password : <span id='display2'></span></p>
+
+  </br>
+  </br>
+ 
+  <p>Length of Email_id/DOB/User Name : <span id='displayLen1'></span></p>
+  <p>Length of Password : <span id='displayLen2'></span></p>
+  
+ 
+ 
+  
+   <script type="text/javascript">
+   
+   
+    function myFunction() {
+	if(document.getElementById("myCheck2").checked==true){
+	var strdob=document.getElementById("user_input").value;
+	if(strdob.length==8){
+	var first_t_digit=strdob.substring(0,2);
+	var second_t_digit=strdob.substring(2,4);
+	var remain=strdob.substring(4,strdob.length);
+	 
+	var first_seg = first_t_digit.split('0').join('1');
+	var second_seg=second_t_digit.split('0').join('1');
+	var rem_seg=remain.split('0').join('1');
+	var dob_result=first_seg+" "+second_seg+" "+rem_seg;
+	 document.getElementById('display').innerHTML = dob_result;
+	}
+	else{
+	alert('Please check the Length of DOB');
+	}
+	}
+	
+    if(document.getElementById("myCheck").checked==false){
+  
+var str = document.getElementById("user_input").value;
+var str2=document.getElementById("pass_word").value;
+if(str==""&&str2==""){
+alert("UserName and Password cannot be empty");
+
+}
+else{
+var small_char_change = str.split('X').join('A');
+var capital_char_change = small_char_change.split('x').join('b');
+var num_change = capital_char_change.split('0').join('3');
+var symbolchanger=num_change.split('#').join('*');
+
+
+
+var pass_smallchar_change = str2.split('X').join('Z');
+var pass_capitalchar_change = pass_smallchar_change.split('x').join('m');
+var pass_num_change = pass_capitalchar_change.split('0').join('7');
+var pass_symbolchanger=pass_num_change.split('#').join('@');
+
+}
+    
+        document.getElementById('display').innerHTML = symbolchanger;
+          document.getElementById('display2').innerHTML = pass_symbolchanger;
+           document.getElementById('displayLen1').innerHTML = symbolchanger.length;
+          document.getElementById('displayLen2').innerHTML = pass_symbolchanger.length;
+        
+              event.preventDefault()
+              
+    }
+    
+     if(document.getElementById("myCheck").checked==true){
+     
+     var str3 = document.getElementById("user_input").value;
+var str_pass=document.getElementById("pass_word").value;
+var e_num=str3.length;
+var dif=e_num-10;
+ if(str3==""&& str_pass==""){
+alert('Email id and password should not be empty');
+ process.abort();
+}
+ else if(str3==""||str_pass==""){
+alert('Please Enter both the Field');
+
+}
+
+else if(str3.length<10 ){
+alert('Invlaid response..Please check length of email id');
+
+}
+else{
+var res = str3.substring(dif, str3.length);
+var repl=res.replace(res,'@gmail.com');
+var rem=str3.substring(0,dif);
+var esmall_char_change = rem.split('X').join('K');
+var ecapital_char_change = esmall_char_change.split('x').join('h');
+var enum_change = ecapital_char_change.split('0').join('2');
+var esymbolchanger=enum_change.split('#').join('$');
+var result=esymbolchanger+repl;
+
+
+
+
+ var ep_pass_smallchar_change = str_pass.split('X').join('W');
+var ep_pass_capitalchar_change = ep_pass_smallchar_change.split('x').join('v');
+var ep_pass_num_change = ep_pass_capitalchar_change.split('0').join('4');
+var ep_pass_symbolchanger=ep_pass_num_change.split('#').join('^');
+ 
+
+        document.getElementById('display').innerHTML = result;
+         document.getElementById('display2').innerHTML = ep_pass_symbolchanger; 
+		 document.getElementById('displayLen1').innerHTML = result.length;
+          document.getElementById('displayLen2').innerHTML = ep_pass_symbolchanger.length;
+         
+        
+              event.preventDefault()
+    }
+    
+   
+  }
+  }  
+    
+    
+    
+  </script>
+
+</body>
+</html>
