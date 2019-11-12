@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+<body style="background-color:#F5F5F5;">
+<h1 style="font-size:30px; color: Black"align="center">~~~~ Data Mocker ~~~~</h1></br>
+  <head lang="en">
+  <meta charset="UTF-8">
+  </head>
+
+
+  <form>
+  
+  
+  
+  
+  
+  <h1 style="font-size:15px; " align="center">   <label ><b>Enter your Input :</b></label> <input type="text" name="message"   id="user_input" align="center">  &nbsp &nbsp Email Format : <input type="checkbox"  id="myCheck" ></br>
+  
+  
+  
+  
+  
+  
+  <h1 style="font-size:15px; " align="center">   <label ><b>Password : </b></label> <input type="text" name="message"   id="pass_word" align="center"> </br></br>
+  </form>
+
+<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" align="center" style="height:35px; width:70px"><br/><br/></font>
+
+<hr>
+</h1>
+<h1 style="font-size:22px; " align="center">  
+<style>
+p.ex1 {
+  margin-left: 70%;
+}
+</style>
+  <label >Mocked Result: </label>
+    </h1>
+    </br>
+ <h1 style="font-size:15px; " align="left">    
+
+
+  <p>Mocked Email_id/ User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='display'></span></p>
+  
+  <p>Mocked Password : <span style="color:Black; font-size:20px ; font-weight:bold" id='display2'></span></p>
+
+  </br>
+  </br>
+ 
+  <p>Length of Email_id/User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen1'></span></p>
+  <p>Length of Password : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen2'></span></p>
+  
+ 
+ 
+  
+   <script type="text/javascript">
+   
+   
+    function myFunction() {
+    if(document.getElementById("myCheck").checked==false){
+  
+var str = document.getElementById("user_input").value;
+var str2=document.getElementById("pass_word").value;
+if(str==""&&str2==""){
+alert("UserName and Password cannot be empty");
+
+}
+else{
+var small_char_change = str.split('X').join('A');
+var capital_char_change = small_char_change.split('x').join('b');
+var num_change = capital_char_change.split('0').join('1');
+var symbolchanger=num_change.split('#').join('*');
+
+
+
+var pass_smallchar_change = str2.split('X').join('Z');
+var pass_capitalchar_change = pass_smallchar_change.split('x').join('m');
+var pass_num_change = pass_capitalchar_change.split('0').join('1');
+var pass_symbolchanger=pass_num_change.split('#').join('@');
+
+}
+    
+        document.getElementById('display').innerHTML = symbolchanger;
+          document.getElementById('display2').innerHTML = pass_symbolchanger;
+           document.getElementById('displayLen1').innerHTML = symbolchanger.length;
+          document.getElementById('displayLen2').innerHTML = pass_symbolchanger.length;
+        
+              event.preventDefault()
+              
+    }
+    
+     if(document.getElementById("myCheck").checked==true){
+     
+     var str3 = document.getElementById("user_input").value;
+var str_pass=document.getElementById("pass_word").value;
+var e_num=str3.length;
+var dif=e_num-10;
+ if(str3==""&& str_pass==""){
+alert('Email id and password should not be empty');
+ process.abort();
+}
+
+else if(str3.length<10 ){
+alert('Invlaid response..Please check length of email id');
+
+}
+else{
+var res = str3.substring(dif, str3.length);
+var repl=res.replace(res,'@gmail.com');
+var rem=str3.substring(0,dif);
+var esmall_char_change = rem.split('X').join('K');
+var ecapital_char_change = esmall_char_change.split('x').join('h');
+var enum_change = ecapital_char_change.split('0').join('w');
+var esymbolchanger=enum_change.split('#').join('u');
+var result=esymbolchanger+repl;
+
+
+
+
+ var ep_pass_smallchar_change = str_pass.split('X').join('W');
+var ep_pass_capitalchar_change = ep_pass_smallchar_change.split('x').join('v');
+var ep_pass_num_change = ep_pass_capitalchar_change.split('0').join('1');
+var ep_pass_symbolchanger=ep_pass_num_change.split('#').join('^');
+ 
+
+        document.getElementById('display').innerHTML = result;
+         document.getElementById('display2').innerHTML = ep_pass_symbolchanger; document.getElementById('displayLen1').innerHTML = result.length;
+          document.getElementById('displayLen2').innerHTML = ep_pass_symbolchanger.length;
+         
+        
+              event.preventDefault()
+    }
+    
+   
+  }
+  }  
+    
+    
+    
+  </script>
+
+</body>
+</html>
