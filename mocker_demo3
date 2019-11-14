@@ -1,0 +1,267 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<body style="background-color:#F5F5F5;">
+<h1 style="font-size:30px; color: Black"align="center">~~~~ Data Mocker ~~~~</h1></br>
+  <head lang="en">
+  <meta charset="UTF-8">
+  </head>
+
+
+  <form autocomplete="off">
+  
+  
+  
+  
+  
+  <h1 style="font-size:15px; " align="center">   <label ><b>Enter your Input :</b></label> <input type="text" name="message"   id="user_input" align="center">  &nbsp &nbsp Email Format : <input type="checkbox"  id="myCheck" ></br>
+  
+  
+  
+  
+  
+  
+  <h1 style="font-size:15px; " align="center">   <label ><b>Password : </b></label> <input type="text" name="message"   id="pass_word" align="center"> </br></br>
+  </form>
+
+<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" align="center" style="height:35px; width:70px"><br/><br/></font>
+
+<hr>
+</h1>
+<h1 style="font-size:22px; " align="center">  
+<style>
+p.ex1 {
+  margin-left: 70%;
+}
+</style>
+  <label >Mocked Result: </label>
+    </h1>
+    </br>
+ <h1 style="font-size:15px; " align="left">    
+
+
+  <p>Mocked Email_id/ User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='display'></span></p>
+  
+  <p>Mocked Password : <span style="color:Black; font-size:20px ; font-weight:bold" id='display2'></span></p>
+
+  </br>
+  </br>
+ 
+  <p>Length of Email_id/User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen1'></span></p>
+  <p>Length of Password : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen2'></span></p>
+  
+ 
+ 
+  
+   <script type="text/javascript">
+   
+   
+    function myFunction() {
+    if(document.getElementById("myCheck").checked==false){
+  
+var start_str = document.getElementById("user_input").value;
+var start_str2 = document.getElementById("pass_word").value;
+ 
+ var str=start_str.trim();
+ var str2=start_str2.trim();
+ 
+var strlength=str.length;
+var strlengths=str2.length;
+
+if(strlength==0 && strlengths==0){
+alert('Please Enter some inputs');
+event.preventDefault();
+}
+else{
+
+var j=1;
+var k=1;
+var num=2;
+var char_num=1;
+var name='';
+var result=null;
+
+for(var i=0;i<strlength;i++){
+
+if(str.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + j);
+name=name+chr;
+j++;
+}
+
+else if(str.charAt(i)=='X'){
+var chr = String.fromCharCode(97 + k).toUpperCase();
+name=name+chr;
+k++;
+}
+
+else if(str.charAt(i)=='#'){
+name=name+'@';
+}
+else if(str.charAt(i)==' '){
+continue;
+}
+else{
+name=name+2;
+}
+
+}
+
+
+
+var p=1;
+var q=1;
+var num=2;
+var char_num=1;
+var pass_conv='';
+for(var i=0;i<strlengths;i++){
+
+if(str2.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + p);
+pass_conv=pass_conv+chr;
+p++;
+}
+
+else if(str2.charAt(i)=='X'){
+var chr = String.fromCharCode(97 + q).toUpperCase();
+pass_conv=pass_conv+chr;
+q++;
+}
+
+else if(str2.charAt(i)=='#'){
+pass_conv=pass_conv+'*';
+}
+
+else if(str2.charAt(i)==' '){
+continue;
+}
+else{
+pass_conv=pass_conv+2;
+}
+
+}
+
+       document.getElementById('display').innerHTML = name.toString();
+         document.getElementById('display2').innerHTML = pass_conv.toString();
+           document.getElementById('displayLen1').innerHTML = str.length;
+		    document.getElementById('displayLen2').innerHTML = str2.length;
+          
+        
+              event.preventDefault();
+              
+    }
+	
+	}
+	
+	
+	
+	
+	  if(document.getElementById("myCheck").checked==true){
+     
+     var start_str3 = document.getElementById("user_input").value;
+var start_str_pass=document.getElementById("pass_word").value;
+
+ var str3=start_str3.trim();
+ var str_pass=start_str_pass.trim();
+
+var passlength=str_pass.length;
+var e_num=str3.length;
+var dif=e_num-10;
+
+var res = str3.substring(dif, str3.length);
+var repl=res.replace(res,'@gmail.com');
+var rem=str3.substring(0,dif);
+
+if(str3.length==0 && str_pass.length==0){
+alert('Please Enter some inputs');
+event.preventDefault();
+}
+else if(str3.length>=1&&str3.length<=10){
+alert('Please Check the length of Email_id');
+event.preventDefault();
+}
+else{
+
+var j=1;
+var k=1;
+var num=2;
+var char_num=1;
+var eml_conv='';
+var result=null;
+for(var i=0;i<rem.length;i++){
+if(rem.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + j);
+eml_conv=eml_conv+chr;
+j++;
+}
+else if(rem.charAt(i)=='X'){
+var chr = String.fromCharCode(112 + k).toUpperCase();
+eml_conv=eml_conv+chr;
+k++;
+}
+else if(rem.charAt(i)=='#'){
+eml_conv=eml_conv+'*';
+}
+else if(rem.charAt(i)==' '){
+continue;
+}
+else{
+eml_conv=eml_conv+2;
+}
+}
+ if(eml_conv!=""){
+var email_result= eml_conv+repl;       
+    }
+	else if(eml_conv==""){
+	var email_result= ""; 
+	}
+	
+	
+var m=1;
+var n=1;
+var num=2;
+var char_num=1;
+var pass_conv='';
+
+for(var i=0;i<passlength;i++){
+if(str_pass.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + m);
+pass_conv=pass_conv+chr;
+m++;
+}
+
+else if(str_pass.charAt(i)=='X'){
+var chr = String.fromCharCode(112 + n).toUpperCase();
+pass_conv=pass_conv+chr;
+n++;
+}
+
+else if(str_pass.charAt(i)=='#'){
+pass_conv=pass_conv+'*';
+}
+else if(str_pass.charAt(i)==' '){
+continue;
+}
+else{
+pass_conv=pass_conv+2;
+}
+}
+
+
+   document.getElementById('display').innerHTML = email_result; 
+   document.getElementById('display2').innerHTML = pass_conv.toString(); 
+	 document.getElementById('displayLen1').innerHTML = str3.length;
+		    document.getElementById('displayLen2').innerHTML = str_pass.length;
+   event.preventDefault();
+  }  
+    }
+    
+     }
+    
+    
+  </script>
+
+</body>
+</html>
