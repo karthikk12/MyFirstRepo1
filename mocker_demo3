@@ -1,16 +1,17 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
-<body style="background-color:#F5F5F5;">
+<body oncontextmenu="return false" style="background-color:#F5F5F5;">
 <h1 style="font-size:30px; color: Black"align="center">~~~~ Data Mocker ~~~~</h1></br>
   <head lang="en">
   <meta charset="UTF-8">
   </head>
 
 
-  <form autocomplete="off">
+  <form id="start" autocomplete="off">
   
   
   
@@ -26,7 +27,7 @@
   <h1 style="font-size:15px; " align="center">   <label ><b>Password : </b></label> <input type="text" name="message"   id="pass_word" align="center"> </br></br>
   </form>
 
-<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" align="center" style="height:35px; width:70px"><br/><br/></font>
+<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="clearFunction()" align="center" style="height:35px; width:70px"><br/><br/></font>
 
 <hr>
 </h1>
@@ -103,8 +104,12 @@ name=name+'@';
 else if(str.charAt(i)==' '){
 continue;
 }
-else{
+
+else if(str.charAt(i)>=0&&str.charAt(i)<=9){
 name=name+2;
+}
+else if(str.charAt(i)!='x' || str.charAt(i)!='X'){
+continue;
 }
 
 }
@@ -137,9 +142,13 @@ pass_conv=pass_conv+'*';
 else if(str2.charAt(i)==' '){
 continue;
 }
-else{
+else if(str2.charAt(i)>=0&&str2.charAt(i)<=9){
 pass_conv=pass_conv+2;
 }
+else if(str2.charAt(i)!='x' || str2.charAt(i)!='X'){
+continue;
+}
+
 
 }
 
@@ -207,9 +216,14 @@ eml_conv=eml_conv+'*';
 else if(rem.charAt(i)==' '){
 continue;
 }
-else{
+else if(rem.charAt(i)>=0&&rem.charAt(i)<=9){
 eml_conv=eml_conv+2;
 }
+
+else if(rem.charAt(i)!='x' || rem.charAt(i)!='X'){
+continue;
+}
+
 }
  if(eml_conv!=""){
 var email_result= eml_conv+repl;       
@@ -244,9 +258,13 @@ pass_conv=pass_conv+'*';
 else if(str_pass.charAt(i)==' '){
 continue;
 }
-else{
+else if(rem.charAt(i)>=0&&rem.charAt(i)<=9){
 pass_conv=pass_conv+2;
 }
+else if(str_pass.charAt(i)!='x' || str_pass.charAt(i)!='X'){
+continue;
+}
+
 }
 
 
@@ -259,7 +277,15 @@ pass_conv=pass_conv+2;
     }
     
      }
-    
+   function clearFunction(){
+   
+   document.getElementById("start").reset();
+   document.getElementById('display').innerHTML = " "; 
+   document.getElementById('display2').innerHTML = " "
+	 document.getElementById('displayLen1').innerHTML = " ";
+		    document.getElementById('displayLen2').innerHTML = " ";
+   event.preventDefault();
+   } 
     
   </script>
 
