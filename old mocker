@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<body style="background-color:#aaa9ad;">
+<h1 style="font-size:50px; color: Black"align="center"><----Data Mocker----></h1>
+
+
+    <form>
+
+   <h1 style="font-size:50px; " align="center"> <font size=6><font color="black">UserName : <input type="text" id="usr_name"  placeholder="Username" name="username1"><br /></font>
+
+    <font size=6><font color="Black"> Password : <input type="text" id="pass_word" placeholder="Password" name="username2" align="center"> <br /></font>
+
+    <font size=7><input type="submit" value="Mock"  onclick="validate()" align="center" style="height:40px; width:80px">  <font size=7><input type="reset" value="Clear" align="center" style="height:40px; width:80px"><br/><br/></font>
+    
+ </form>
+
+
+<hr color="Black">
+
+
+
+   
+    
+    <form>
+    <h1 style="font-size:50px; " align="center"> <font size=6><font color="black"> Email id : <input type="text" id="email_id" placeholder="Email" name="username2"> <br /></font>
+     
+ <font size=6><font color="Black"> Password : <input type="text" id="ep_pass_word" placeholder="Password" name="username3" align="center"> <br /></font>
+ 
+<font size=7><input type="submit" value="Mock"  onclick="validate2()" align="center" style="height:40px; width:80px"> <font size=7><input type="reset" value="Clear" align="center" style="height:40px; width:80px"><br/><br/></font>
+
+</form>
+<hr color="Black">
+
+
+
+ <form>
+    <h1 style="font-size:50px; " align="center"> <font size=6><font color="black">MFA 1 : <input type="text" id="MFA1" placeholder="MFA" name="MFA1"> <br /></font>
+     
+ <font size=6><font color="Black"> MFA 2 : <input type="text" id="MFA2" placeholder="MFA" name="MFA2" align="center"> <br /></font>
+ 
+  <font size=6><font color="Black"> MFA 3 : <input type="text" id="MFA3" placeholder="MFA" name="MFA3" align="center"> <br /></font>
+  
+    <font size=6><font color="Black"> MFA 4 : <input type="text" id="MFA4" placeholder="MFA" name="MFA4" align="center"> <br /></font>
+ 
+<font size=7><input type="submit" value="Mock"  onclick="validate4()" align="center" style="height:40px; width:80px"> <font size=7><input type="reset" value="Clear" align="center" style="height:40px; width:80px"><br/><br/></font>
+</form>
+
+<script type="text/javascript">
+function validate()
+
+{
+var str = document.getElementById("usr_name").value;
+var str2=document.getElementById("pass_word").value;
+if(str==""&&str2==""){
+alert("UserName and Password cannot be empty");
+
+}
+ else if(str==""||str2==""){
+alert("Please enter both the fields");
+
+}
+else{
+var small_char_change = str.split('X').join('A');
+var capital_char_change = small_char_change.split('x').join('b');
+var num_change = capital_char_change.split('0').join('3');
+var symbolchanger=num_change.split('#').join('*');
+
+
+
+
+var pass_smallchar_change = str2.split('X').join('Z');
+var pass_capitalchar_change = pass_smallchar_change.split('x').join('m');
+var pass_num_change = pass_capitalchar_change.split('0').join('7');
+var pass_symbolchanger=pass_num_change.split('#').join('%');
+}
+
+ document.write("Mocked User Name : "+symbolchanger.bold().fontsize(5));
+document.write("<br>");
+document.write("<br>");
+document.write("Mocked Password : "+pass_symbolchanger.bold().fontsize(5));
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("--------------->UserName Length : "+ num_change.length);
+document.write("<br>");
+document.write("--------------->Password Length : "+ pass_num_change.length);
+
+
+}
+
+function validate2(){
+var str3 = document.getElementById("email_id").value;
+var str_pass=document.getElementById("ep_pass_word").value;
+var e_num=str3.length;
+var dif=e_num-10;
+ if(str3==""&& str_pass==""){
+alert('Email id and password should not be empty');
+ process.abort();
+}
+ else if(str3==""||str_pass==""){
+alert('Please Enter both the Field');
+
+}
+
+else if(str3.length<10 ){
+alert('Invlaid response..Please check length of email id');
+
+}
+else{
+var res = str3.substring(dif, str3.length);
+var repl=res.replace(res,'@gmail.com');
+var rem=str3.substring(0,dif);
+var esmall_char_change = rem.split('X').join('K');
+var ecapital_char_change = esmall_char_change.split('x').join('h');
+var enum_change = ecapital_char_change.split('0').join('2');
+var esymbolchanger=enum_change.split('#').join('$');
+var result=esymbolchanger+repl;
+document.write("Mocked Email_id :"+result.bold().fontsize(5));
+document.write("<br>");
+
+
+
+var ep_pass_smallchar_change = str_pass.split('X').join('W');
+var ep_pass_capitalchar_change = ep_pass_smallchar_change.split('x').join('v');
+var ep_pass_num_change = ep_pass_capitalchar_change.split('0').join('4');
+var ep_pass_symbolchanger=ep_pass_num_change.split('#').join('^');
+document.write("<br>");
+document.write("Mocked Password : "+ep_pass_symbolchanger.bold().fontsize(5));
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("----------------->Email_id length: "+result.length);
+document.write("<br>");
+document.write("----------------->Password length: "+ep_pass_symbolchanger.length);
+}
+}
+function validate4(){
+var str4=document.getElementById("MFA1").value;
+var str5=document.getElementById("MFA2").value;
+var str6=document.getElementById("MFA3").value;
+var str7=document.getElementById("MFA4").value;
+if(str4==""&&str5==""&&str6==""&&str7==""){
+alert('Please Enter some Inputs');
+}
+else{
+var small_char_change1 = str4.split('X').join('A');
+var capital_char_change1 = small_char_change1.split('x').join('b');
+var num_change1 = capital_char_change1.split('0').join('3');
+var symbolchanger1=num_change1.split('#').join('*');
+
+var small_char_change2 = str5.split('X').join('A');
+var capital_char_change2 = small_char_change2.split('x').join('b');
+var num_change2 = capital_char_change2.split('0').join('3');
+var symbolchanger2=num_change2.split('#').join('*');
+
+
+var small_char_change3 = str6.split('X').join('A');
+var capital_char_change3 = small_char_change3.split('x').join('b');
+var num_change3 = capital_char_change3.split('0').join('3');
+var symbolchanger3=num_change3.split('#').join('*');
+
+
+var small_char_change4 = str7.split('X').join('A');
+var capital_char_change4 = small_char_change4.split('x').join('b');
+var num_change4 = capital_char_change4.split('0').join('3');
+var symbolchanger4=num_change4.split('#').join('*');
+
+document.write("Mocked MFA 1 : "+symbolchanger1.bold());
+document.write("<br>")
+document.write("Mocked MFA 2 : "+symbolchanger2.bold());
+document.write("<br>")
+document.write("Mocked MFA 3 : "+symbolchanger3.bold());
+document.write("<br>")
+document.write("Mocked MFA 4 : "+symbolchanger4.bold());
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("<br>");
+document.write("--------------------->MFA 1 Length : "+symbolchanger1.length);
+document.write("<br>");
+document.write("--------------------->MFA 2 Length : "+symbolchanger2.length);
+document.write("<br>");
+document.write("--------------------->MFA 3 Length : "+symbolchanger3.length);
+document.write("<br>");
+document.write("--------------------->MFA 4 Length : "+symbolchanger4.length);
+document.write("<br>");
+}
+}
+</script>
+</body>
+</html>
