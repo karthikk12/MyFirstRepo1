@@ -1,22 +1,236 @@
-<html lang="en-US">
-<body style="background-color:skyblue" >
+<!DOCTYPE html>
+<html>
+<body style="background-color:#F5F5F5;">
+
+<p style="text-align:right;"> <strong><span style="float:right"; font-size:20px ;  font-weight:"bold"  id='currenttims'></span></strong>
+<span style="float:left;"> <strong><span style="float:left"; font-size:20px ;  font-weight:"bold" id='currentdats'></span></strong>  </span>
+</p>
 
 
-<h1 align=center><marquee behavior="scroll" direction="left">  Welcome to Karthikeyan's 1st Auto Generator Messenger </marquee>  </h1>
+
+  <head lang="en">
+  <meta charset="UTF-8">
+  </head>
+
+
+  <form id="start" autocomplete="off">
+  
+  
+  
+  <p style="text-align:center; font-size:25px"><strong style="font-size:25px">MFA Mocker : </strong></p></br>
+  
+  
+  <p  style="text-align:center"; style="font-size:15px;"  align="center">   <label style="font-size:15px;" ><b>MFA  Ques 1:</b></label> <input type="text" name="message"   id="Mfa_1" align="center"></p>
+  <p style="font-size:15px; " align="center">   <label ><b>MFA Ques 2:</b></label> <input type="text" name="message"   id="Mfa_2" align="center"> </br>
+  
+  
+  
+  
+  
+  
+  <h1 style="font-size:15px; " align="center">   <label ><b>MFA Ques 3 : </b></label> <input type="text" name="message"   id="Mfa_3" align="center"> </br></br>
+  </form>
+
+<font size=5><input type="submit" value="Mock"  onclick="myFunctions()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="clearFunction()" align="center" style="height:35px; width:70px"> <input type="button" align="center" style="height:35px; width:130px" onclick="window.location.href = 'https://karthikk12.github.io/page2/';" value="User ID page"/> </font>
+
+
 
 <hr>
-<h1 align ="center"><p style="font size:300px ; color:red" > Hello if u wanna to know message for You......?
-
-<p style="color:Blue">Please press Yes..
 </h1>
-<h1 align="center"<p style="color:Red"> If you want to exit.... </p>
+<h1 style="font-size:22px; " align="center">  
+<style>
+p.ex1 {
+  margin-left: 70%;
+}
+</style>
+  <label >Mocked Result: </label>
+    </h1>
+    </br>
+ <h1 style="font-size:15px; " align="left">    
 
-<p style="color:Green"> Press No..</p>
-</h1>
-<hr>
-<h1><a href="https://karthikk12.github.io/my-page/"><p align=left>Yes</a>
+<p> MFA Answer 1: <span style="color:Black; font-size:20px ; font-weight:bold" id='display3'></span></p>
+  <p>MFA Answer 2 : <span style="color:Black; font-size:20px ; font-weight:bold" id='display'></span></p>
+  
+  <p>MFA Answer 3 : <span style="color:Black; font-size:20px ; font-weight:bold" id='display2'></span></p>
+  </br>
+  </br>
+  
+ <p style="text-align:left;">Length of MFA Answer 1 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen3'></p>
+  <p>Length of MFA Answer 2 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen1'></span></p>
+  <p>Length of MFA Answer 3 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen2'></span></p>
+   
+ 
+ 
+  
+   <script type="text/javascript">
+   
+  
+ function myFunctions() {
+var start_str0=document.getElementById("Mfa_1").value;  
+var start_str = document.getElementById("Mfa_2").value;
+var start_str2 = document.getElementById("Mfa_3").value;
+ 
+ var str0=start_str0.trim();
+ var str=start_str.trim();
+ var str2=start_str2.trim();
+ 
+var strlength0=str0.length; 
+var strlength=str.length;
+var strlengths=str2.length;
 
-</h1><h1><a href="https://karthikk12.github.io/page2/"><p align=left>No</a></h1>
-<a href=
+if(strlength0==0&&strlength==0&&strlengths==0){
+alert('Please Enter Some inputs');
+event.preventDefault();
+}
+else{
+
+
+var j=1;
+var k=1;
+var num=2;
+var char_num=1;
+var Mfa_ans1='';
+var count1=0;
+var result=null;
+
+
+for(var i=0;i<strlength0;i++){
+
+if(str0.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + j);
+Mfa_ans1=Mfa_ans1+chr;
+j++;
+}
+
+else if(str0.charAt(i)=='X'){
+var chr = String.fromCharCode(97 + k).toUpperCase();
+Mfa_ans1=Mfa_ans1+chr;
+k++;
+}
+
+else if(str0.charAt(i)=='#'){
+Mfa_ans1=Mfa_ans1+'@';
+}
+else if(str0.charAt(i)==' '){
+continue;
+}
+
+else if(str0.charAt(i)>=0&&str0.charAt(i)<=9){
+Mfa_ans1=Mfa_ans1+2;
+}
+else if(str0.charAt(i)!='x' || str.charAt(i)!='X'){
+count1++;
+continue;
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+var j=1;
+var k=1;
+var num=2;
+var char_num=1;
+var Mfa_ans2='';
+var count2=0;
+var result=null;
+
+for(var i=0;i<strlength;i++){
+
+if(str.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + j);
+Mfa_ans2=Mfa_ans2+chr;
+j++;
+}
+
+else if(str.charAt(i)=='X'){
+var chr = String.fromCharCode(97 + k).toUpperCase();
+Mfa_ans2=Mfa_ans2+chr;
+k++;
+}
+
+else if(str.charAt(i)=='#'){
+Mfa_ans2=Mfa_ans2+'@';
+}
+else if(str.charAt(i)==' '){
+continue;
+}
+
+else if(str.charAt(i)>=0&&str.charAt(i)<=9){
+Mfa_ans2=Mfa_ans2+2;
+}
+else if(str.charAt(i)!='x' || str.charAt(i)!='X'){
+count2++;
+continue;
+}
+
+}
+
+
+
+var p=1;
+var q=1;
+var num=2;
+var char_num=1;
+var count3=0;
+var Mfa_ans3='';
+for(var i=0;i<strlengths;i++){
+
+if(str2.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + p);
+Mfa_ans3=Mfa_ans3+chr;
+p++;
+}
+
+else if(str2.charAt(i)=='X'){
+var chr = String.fromCharCode(97 + q).toUpperCase();
+Mfa_ans3=Mfa_ans3+chr;
+q++;
+}
+
+else if(str2.charAt(i)=='#'){
+Mfa_ans3=Mfa_ans3+'*';
+}
+
+else if(str2.charAt(i)==' '){
+continue;
+}
+else if(str2.charAt(i)>=0&&str2.charAt(i)<=9){
+Mfa_ans3=Mfa_ans3+2;
+}
+else if(str2.charAt(i)!='x' || str2.charAt(i)!='X'){
+count3++;
+continue;
+}
+}
+
+ if(count1==0&& count2==0&& count3==0){
+document.getElementById('display3').innerHTML = Mfa_ans1.toString();
+       document.getElementById('display').innerHTML = Mfa_ans2.toString();
+         document.getElementById('display2').innerHTML = Mfa_ans3.toString();
+           document.getElementById('displayLen1').innerHTML = str.length;
+		    document.getElementById('displayLen2').innerHTML = str2.length;
+			document.getElementById('displayLen3').innerHTML = str0.length;
+          
+        
+              event.preventDefault();
+			  }
+			  else{
+			  alert('Invalid Input....Input should only contains xX0#');
+			 event.preventDefault();
+			  }
+  
+} 
+	}
+	 </script>
 </body>
 </html>
