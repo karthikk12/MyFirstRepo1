@@ -31,7 +31,7 @@
   <h1 style="font-size:15px; " align="center">   <label ><b>MFA Ques 3 : </b></label> <input type="text" name="message"   id="Mfa_3" align="center"> </br></br>
   </form>
 
-<font size=5><input type="submit" value="Mock"  onclick="myFunctions()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="clearFunction()" align="center" style="height:35px; width:70px"> <input type="button" align="center" style="height:35px; width:130px" onclick="window.location.href = 'https://karthikk12.github.io/page2/';" value="User ID page"/> </font>
+<font size=5><input type="submit" value="Mock"  onclick="myFunctions()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="MFAclearFunction()" align="center" style="height:35px; width:70px"> <input type="button" align="center" style="height:35px; width:130px" onclick="window.location.href = 'https://karthikk12.github.io/page2/';" value="User ID page"/> </font>
 
 
 
@@ -231,6 +231,18 @@ document.getElementById('display3').innerHTML = Mfa_ans1.toString();
   
 } 
 	}
+	 function MFAclearFunction(){
+   
+   document.getElementById("start").reset();
+   document.getElementById('display3').innerHTML=""
+   document.getElementById('display').innerHTML = " "; 
+   document.getElementById('display2').innerHTML = " "
+	 document.getElementById('displayLen1').innerHTML = " ";
+		    document.getElementById('displayLen2').innerHTML = " ";
+			 document.getElementById('displayLen3').innerHTML = " ";
+   event.preventDefault();
+   } 
+	
 	 </script>
 </body>
 </html>
