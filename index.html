@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <body style="background-color:#F5F5F5;">
@@ -48,16 +49,16 @@ p.ex1 {
     </br>
  <h1 style="font-size:15px; " align="left">    
 
-<p> MFA Answer 1: <span style="color:Black; font-size:20px ; font-weight:bold" id='display3'></span></p>
-  <p>MFA Answer 2 : <span style="color:Black; font-size:20px ; font-weight:bold" id='display'></span></p>
+<p> MFA Answer 1: <span style="color:Black; font-size:20px ; font-weight:bold" id='display1'></span></p>
+  <p>MFA Answer 2 : <span style="color:Black; font-size:20px ; font-weight:bold" id='display2'></span></p>
   
-  <p>MFA Answer 3 : <span style="color:Black; font-size:20px ; font-weight:bold" id='display2'></span></p>
+  <p>MFA Answer 3 : <span style="color:Black; font-size:20px ; font-weight:bold" id='display3'></span></p>
   </br>
   </br>
   
- <p style="text-align:left;">Length of MFA Answer 1 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen3'></p>
-  <p>Length of MFA Answer 2 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen1'></span></p>
-  <p>Length of MFA Answer 3 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen2'></span></p>
+ <p style="text-align:left;">Length of MFA Answer 1 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen1'></p>
+  <p>Length of MFA Answer 2 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen2'></span></p>
+  <p>Length of MFA Answer 3 : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen3'></span></p>
    
  
  
@@ -66,13 +67,11 @@ p.ex1 {
    
   
  function myFunctions() {
-var start_str0=document.getElementById("Mfa_1").value;  
-var start_str = document.getElementById("Mfa_2").value;
-var start_str2 = document.getElementById("Mfa_3").value;
+var str0=document.getElementById("Mfa_1").value;  
+var str = document.getElementById("Mfa_2").value;
+var str2 = document.getElementById("Mfa_3").value;
  
- var str0=start_str0.trim();
- var str=start_str.trim();
- var str2=start_str2.trim();
+
  
 var strlength0=str0.length; 
 var strlength=str.length;
@@ -95,8 +94,12 @@ var result=null;
 
 
 for(var i=0;i<strlength0;i++){
+if(str0.charAt(i)==0){
+var chr=" ";
+Mfa_ans1=Mfa_ans1+chr;
+}
 
-if(str0.charAt(i)=='x'){
+else if(str0.charAt(i)=='x'){
 var chr = String.fromCharCode(97 + j);
 Mfa_ans1=Mfa_ans1+chr;
 j++;
@@ -124,6 +127,7 @@ continue;
 
 }
 
+
 }
 
 
@@ -141,12 +145,17 @@ var k=1;
 var num=2;
 var char_num=1;
 var Mfa_ans2='';
-var count2=0;
+var count2=0;    
 var result=null;
 
 for(var i=0;i<strlength;i++){
 
-if(str.charAt(i)=='x'){
+if(str.charAt(i)==' '){
+var chr=" ";
+Mfa_ans2=Mfa_ans2+chr;
+}
+
+else if(str.charAt(i)=='x'){
 var chr = String.fromCharCode(97 + j);
 Mfa_ans2=Mfa_ans2+chr;
 j++;
@@ -183,9 +192,15 @@ var num=2;
 var char_num=1;
 var count3=0;
 var Mfa_ans3='';
+var main_count=1;
 for(var i=0;i<strlengths;i++){
 
-if(str2.charAt(i)=='x'){
+if(str2.charAt(i)==' '){
+var chr=" ";
+Mfa_ans3=Mfa_ans3+chr;
+}
+
+else if(str2.charAt(i)=='x'){
 var chr = String.fromCharCode(97 + p);
 Mfa_ans3=Mfa_ans3+chr;
 p++;
@@ -213,13 +228,30 @@ continue;
 }
 }
 
+
+var left_mfa_ans1=Mfa_ans1.trimLeft();
+var left_mfa_ans2=Mfa_ans2.trimLeft();
+var left_mfa_ans3=Mfa_ans3.trimLeft();
+
+
+var right_mfa_ans1=left_mfa_ans1.trimEnd();
+var right_mfa_ans2=left_mfa_ans2.trimEnd();
+var right_mfa_ans3=left_mfa_ans3.trimEnd();
+
+
+var res_Mfa_ans1=right_mfa_ans1.toString();
+var res_Mfa_ans2=right_mfa_ans2.toString();
+var res_Mfa_ans3=right_mfa_ans3.toString();
+
+
+
  if(count1==0&& count2==0&& count3==0){
-document.getElementById('display3').innerHTML = Mfa_ans1.toString();
-       document.getElementById('display').innerHTML = Mfa_ans2.toString();
-         document.getElementById('display2').innerHTML = Mfa_ans3.toString();
-           document.getElementById('displayLen1').innerHTML = str.length;
-		    document.getElementById('displayLen2').innerHTML = str2.length;
-			document.getElementById('displayLen3').innerHTML = str0.length;
+document.getElementById('display1').innerHTML = res_Mfa_ans1.toString();
+       document.getElementById('display2').innerHTML = res_Mfa_ans2.toString();
+         document.getElementById('display3').innerHTML = res_Mfa_ans3.toString();
+           document.getElementById('displayLen1').innerHTML = res_Mfa_ans1.length;
+		    document.getElementById('displayLen2').innerHTML = res_Mfa_ans2.length;
+			document.getElementById('displayLen3').innerHTML = res_Mfa_ans3.length;
           
         
               event.preventDefault();
