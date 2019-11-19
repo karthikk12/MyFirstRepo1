@@ -2,10 +2,20 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html>
-<body oncontextmenu="return false" style="background-color:#F5F5F5;">
-<h1 style="font-size:30px; color: Black"align="center">~~~~ Data Mocker ~~~~</h1></br>
+<body  onload="startdate();startTime();" style="background-color:#F5F5F5;">
+
+<p style="text-align:right;"> <strong><span style="float:right"; font-size:20px ;  font-weight:"bold"  id='currenttim'></span></strong>
+<span style="float:left;"> <strong><span style="float:left"; font-size:20px ;  font-weight:"bold" id='currentdat'></span></strong>  </span>
+</p>
+
+
+
+
+<h1 style="font-size:30px; color: Black" align="center"> Data Mocker </h1><hr>
   <head lang="en">
   <meta charset="UTF-8">
   </head>
@@ -15,9 +25,11 @@
   
   
   
+  <p style="text-align:center; font-size:25px"><strong style="font-size:25px">Enter your Input :</strong></p>
   
   
-  <h1 style="font-size:15px; " align="center">   <label ><b>Enter your Input :</b></label> <input type="text" name="message"   id="user_input" align="center">  &nbsp &nbsp Email Format : <input type="checkbox"  id="myCheck" ></br>
+  <p  style="text-align:center"; style="font-size:15px;"  align="center">   <label style="font-size:15px;" ><b>Online Id :</b></label> <input type="text" name="message"   id="online_input" align="center">(If applicable)</p>
+  <p style="font-size:15px; " align="center">   <label ><b>UserName/Id :</b></label> <input type="text" name="message"   id="user_input" align="center">  &nbsp &nbsp Email Format : <input type="checkbox"  id="myCheck" ></br>
   
   
   
@@ -27,7 +39,8 @@
   <h1 style="font-size:15px; " align="center">   <label ><b>Password : </b></label> <input type="text" name="message"   id="pass_word" align="center"> </br></br>
   </form>
 
-<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="clearFunction()" align="center" style="height:35px; width:70px"><br/><br/></font>
+<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="clearFunction()" align="center" style="height:35px; width:70px"> <input type="button" align="center" style="height:35px; width:80px" onclick="window.location.href = 'https://karthikk12.github.io/MyFirstRepo1/';" value="MFA Page"/> </font>
+
 
 <hr>
 </h1>
@@ -42,36 +55,76 @@ p.ex1 {
     </br>
  <h1 style="font-size:15px; " align="left">    
 
-
+<p> Mocked Online ID : <span style="color:Black; font-size:20px ; font-weight:bold" id='display3'></span></p>
   <p>Mocked Email_id/ User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='display'></span></p>
   
   <p>Mocked Password : <span style="color:Black; font-size:20px ; font-weight:bold" id='display2'></span></p>
-
   </br>
   </br>
- 
+  
+ <p style="text-align:left;">Length of Online ID : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen3'></p>
   <p>Length of Email_id/User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen1'></span></p>
   <p>Length of Password : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen2'></span></p>
-  
+   
  
  
   
    <script type="text/javascript">
    
-   
-    function myFunction() {
+function time_initializer(){
+if (i < 10) {
+    i = "0" + i;
+}
+return i;
+}
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+
+  var m = today.getMinutes();
+ 
+  var s = today.getSeconds();
+  
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('currenttim').innerHTML =h + ":" + m + ":" + s;
+  var t = setTimeout(startTime, 500);
+}
+
+function checkTime(i) {
+  if (i < 10) {
+  i = "0" + i
+  };  
+  return i;
+  
+}
+  
+function startdate(){
+var today = new Date();
+
+var resdate = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+
+ document.getElementById('currentdat').innerHTML =resdate;
+
+}
+  
+ function myFunction() {
     if(document.getElementById("myCheck").checked==false){
   
+var start_str0=document.getElementById("online_input").value;  
 var start_str = document.getElementById("user_input").value;
 var start_str2 = document.getElementById("pass_word").value;
  
+ var str0=start_str0.trim();
  var str=start_str.trim();
  var str2=start_str2.trim();
  
+var strlength0=str0.length; 
 var strlength=str.length;
 var strlengths=str2.length;
 
-if(strlength==0 && strlengths==0){
+if(strlength0==0&&strlength==0 && strlengths==0){
 alert('Please Enter some inputs');
 event.preventDefault();
 }
@@ -81,7 +134,58 @@ var j=1;
 var k=1;
 var num=2;
 var char_num=1;
+var count=0;
+var online_name='';
+var result=null;
+
+for(var i=0;i<strlength0;i++){
+
+if(str0.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + j);
+online_name=online_name+chr;
+j++;
+}
+
+else if(str0.charAt(i)=='X'){
+var chr = String.fromCharCode(97 + k).toUpperCase();
+online_name=online_name+chr;
+k++;
+}
+
+else if(str0.charAt(i)=='#'){
+online_name=online_name+'@';
+}
+else if(str0.charAt(i)==' '){
+continue;
+}
+
+else if(str0.charAt(i)>=0&&str0.charAt(i)<=9){
+online_name=online_name+2;
+}
+else if(str0.charAt(i)!='x' || str.charAt(i)!='X'){
+count++;
+continue;
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+var j=1;
+var k=1;
+var num=2;
+var char_num=1;
 var name='';
+var count1=0;
 var result=null;
 
 for(var i=0;i<strlength;i++){
@@ -109,6 +213,7 @@ else if(str.charAt(i)>=0&&str.charAt(i)<=9){
 name=name+2;
 }
 else if(str.charAt(i)!='x' || str.charAt(i)!='X'){
+count1++;
 continue;
 }
 
@@ -120,6 +225,7 @@ var p=1;
 var q=1;
 var num=2;
 var char_num=1;
+var count2=0;
 var pass_conv='';
 for(var i=0;i<strlengths;i++){
 
@@ -146,21 +252,30 @@ else if(str2.charAt(i)>=0&&str2.charAt(i)<=9){
 pass_conv=pass_conv+2;
 }
 else if(str2.charAt(i)!='x' || str2.charAt(i)!='X'){
+count2++;
 continue;
 }
 
 
 }
-
+if(count==0&&count1==0&&count2==0){
+document.getElementById('display3').innerHTML = online_name.toString();
        document.getElementById('display').innerHTML = name.toString();
          document.getElementById('display2').innerHTML = pass_conv.toString();
            document.getElementById('displayLen1').innerHTML = str.length;
 		    document.getElementById('displayLen2').innerHTML = str2.length;
+			document.getElementById('displayLen3').innerHTML = str0.length;
           
         
               event.preventDefault();
               
     }
+	else{
+	 alert('Invalid Input....Input should only contains xX0#');
+			 event.preventDefault();
+	}
+	}
+
 	
 	}
 	
@@ -169,9 +284,11 @@ continue;
 	
 	  if(document.getElementById("myCheck").checked==true){
      
+	 var start_em_str9=document.getElementById("online_input").value;
      var start_str3 = document.getElementById("user_input").value;
 var start_str_pass=document.getElementById("pass_word").value;
 
+var str9=start_em_str9.trim();
  var str3=start_str3.trim();
  var str_pass=start_str_pass.trim();
 
@@ -193,9 +310,55 @@ event.preventDefault();
 }
 else{
 
+
 var j=1;
 var k=1;
 var num=2;
+var count4=0;
+var char_num=1;
+var online_name='';
+var result=null;
+
+for(var i=0;i<strlength0;i++){
+
+if(str0.charAt(i)=='x'){
+var chr = String.fromCharCode(97 + j);
+online_name=online_name+chr;
+j++;
+}
+
+else if(str0.charAt(i)=='X'){
+var chr = String.fromCharCode(97 + k).toUpperCase();
+online_name=online_name+chr;
+k++;
+}
+
+else if(str0.charAt(i)=='#'){
+online_name=online_name+'@';
+}
+else if(str0.charAt(i)==' '){
+continue;
+}
+
+else if(str0.charAt(i)>=0&&str0.charAt(i)<=9){
+online_name=online_name+2;
+}
+else if(str0.charAt(i)!='x' || str.charAt(i)!='X'){
+count4++;
+continue;
+}
+
+}
+
+
+
+
+
+
+var j=1;
+var k=1;
+var num=2;
+var count5=0;
 var char_num=1;
 var eml_conv='';
 var result=null;
@@ -221,6 +384,7 @@ eml_conv=eml_conv+2;
 }
 
 else if(rem.charAt(i)!='x' || rem.charAt(i)!='X'){
+count5++;
 continue;
 }
 
@@ -236,6 +400,7 @@ var email_result= eml_conv+repl;
 var m=1;
 var n=1;
 var num=2;
+var count6=0;
 var char_num=1;
 var pass_conv='';
 
@@ -262,32 +427,47 @@ else if(rem.charAt(i)>=0&&rem.charAt(i)<=9){
 pass_conv=pass_conv+2;
 }
 else if(str_pass.charAt(i)!='x' || str_pass.charAt(i)!='X'){
+count6++;
 continue;
 }
 
 }
-
-
+if(count4==0&&count5==0&&count6==0){
+   
    document.getElementById('display').innerHTML = email_result; 
    document.getElementById('display2').innerHTML = pass_conv.toString(); 
-	 document.getElementById('displayLen1').innerHTML = str3.length;
+document.getElementById('display3').innerHTML = online_name.toString();	
+	document.getElementById('displayLen1').innerHTML = str3.length;
 		    document.getElementById('displayLen2').innerHTML = str_pass.length;
+			document.getElementById('displayLen3').innerHTML = online_name.length;
    event.preventDefault();
-  }  
+  }
+else{
+ alert('Invalid Input....Input should only contains xX0#');
+			 event.preventDefault();
+}  
+}  
     }
     
      }
    function clearFunction(){
    
    document.getElementById("start").reset();
+   document.getElementById('display3').innerHTML=""
    document.getElementById('display').innerHTML = " "; 
    document.getElementById('display2').innerHTML = " "
 	 document.getElementById('displayLen1').innerHTML = " ";
 		    document.getElementById('displayLen2').innerHTML = " ";
+			 document.getElementById('displayLen3').innerHTML = " ";
    event.preventDefault();
    } 
-    
-  </script>
+   
+   function curdate(){
+let today = new Date().toLocaleDateString();
 
+ document.getElementById('nowdate').innerHTML =today;  
+   } 
+  </script>
 </body>
 </html>
+
