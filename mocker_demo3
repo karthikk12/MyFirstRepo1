@@ -6,6 +6,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html>
 <body  onload="startdate();startTime();" style="background-color:#F5F5F5;">
@@ -27,7 +29,7 @@
   
   
   
-  <p style="text-align:center; font-size:25px"><strong style="font-size:25px">Enter your Input :</strong></p>
+  <p style="text-align:center; font-size:25px"><strong style="font-size:20px">Enter your Input :</strong></p>
   
   
   <p  style="text-align:center"; style="font-size:15px;"  align="center">   <label style="font-size:15px;" ><b>Online Id :</b></label> <input type="text" name="message"   id="online_input" align="center">(If applicable)</p>
@@ -158,10 +160,10 @@ j++;
 }
 
 else if(str0.charAt(i)=='X'){
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 if(k==26){
 k=1;
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 online_name=online_name+chr;
 k++;
 }
@@ -234,10 +236,10 @@ j++;
 }
 
 else if(str.charAt(i)=='X'){
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 if(k==26){
 k=1;
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 name=name+chr;
 k++;
 }
@@ -297,10 +299,10 @@ p++;
 }
 
 else if(str2.charAt(i)=='X'){
-var chr = String.fromCharCode(97 + q).toUpperCase();
+var chr = String.fromCharCode(65 + q);
 if(q==26){
 q=1;
-var chr = String.fromCharCode(97 + q).toUpperCase();
+var chr = String.fromCharCode(65 + q);
 pass_conv=pass_conv+chr;
 q++;
 }
@@ -416,10 +418,10 @@ j++;
 }
 
 else if(str0.charAt(i)=='X'){
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 if(k==26){
 k=1;
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 online_name=online_name+chr;
 k++;
 }
@@ -486,10 +488,10 @@ j++;
 }
 
 else if(rem.charAt(i)=='X'){
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 if(k==26){
 k=1;
-var chr = String.fromCharCode(97 + k).toUpperCase();
+var chr = String.fromCharCode(65 + k);
 eml_conv=eml_conv+chr;
 k++;
 }
@@ -555,10 +557,10 @@ m++;
 }
 
 else if(str_pass.charAt(i)=='X'){
-var chr = String.fromCharCode(97 + n).toUpperCase();
+var chr = String.fromCharCode(65 + n);
 if(n==26){
 n=1;
-var chr = String.fromCharCode(97 + n).toUpperCase();
+var chr = String.fromCharCode(65 + n);
 pass_conv=pass_conv+chr;
 n++;
 }
