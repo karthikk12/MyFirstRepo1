@@ -8,6 +8,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html>
 <body  onload="startdate();startTime();" style="background-color:#F5F5F5;">
@@ -372,6 +374,7 @@ var str9=start_em_str9.trim();
  var str3=start_str3.trim();
  var str_pass=start_str_pass.trim();
 
+ var str9length=str9.length;
 var passlength=str_pass.length;
 var e_num=str3.length;
 var dif=e_num-10;
@@ -380,7 +383,7 @@ var res = str3.substring(dif, str3.length);
 var repl=res.replace(res,'@gmail.com');
 var rem=str3.substring(0,dif);
 
-if(str3.length==0 && str_pass.length==0){
+if(str3.length==0 && str_pass.length==0 && str9.length==0){
 alert('Please Enter some inputs');
 event.preventDefault();
 }
@@ -400,9 +403,9 @@ var char_num=1;
 var online_name='';
 var result=null;
 
-for(var i=0;i<strlength0;i++){
+for(var i=0;i<str9length;i++){
 
-if(str0.charAt(i)=='x'){
+if(str9.charAt(i)=='x'){
 var chr = String.fromCharCode(97 + j);
 if(j==26){
 j=1;
@@ -417,7 +420,7 @@ j++;
 }
 }
 
-else if(str0.charAt(i)=='X'){
+else if(str9.charAt(i)=='X'){
 var chr = String.fromCharCode(65 + k);
 if(k==26){
 k=1;
@@ -432,14 +435,14 @@ k++;
 }
 }
 
-else if(str0.charAt(i)=='#'){
+else if(str9.charAt(i)=='#'){
 online_name=online_name+'@';
 }
-else if(str0.charAt(i)==' '){
+else if(str9.charAt(i)==' '){
 continue;
 }
 
-else if(str0.charAt(i)>=0&&str0.charAt(i)<=9){
+else if(str9.charAt(i)>=0&&str9.charAt(i)<=9){
 if(number_use==10){
 number_use=1;
 online_name=online_name+number_use;
@@ -450,12 +453,15 @@ online_name=online_name+number_use;
 number_use++;
 }
 }
-else if(str0.charAt(i)!='x' || str.charAt(i)!='X'){
+else if(str9.charAt(i)!='x' || str9.charAt(i)!='X'){
 count4++;
 continue;
 }
 
 }
+
+
+
 
 
 
@@ -532,6 +538,13 @@ var email_result= eml_conv+repl;
 	var email_result= ""; 
 	}
 	
+
+
+
+
+
+
+
 	
 var m=1;
 var n=1;
@@ -577,7 +590,7 @@ pass_conv=pass_conv+'*';
 else if(str_pass.charAt(i)==' '){
 continue;
 }
-else if(rem.charAt(i)>=0&&rem.charAt(i)<=9){
+else if(str_pass.charAt(i)>=0&&str_pass.charAt(i)<=9){
 if(number_use==10){
 number_use=1;
 pass_conv=pass_conv+number_use;
@@ -594,6 +607,14 @@ continue;
 }
 
 }
+
+
+
+
+
+
+
+
 if(count4==0&&count5==0&&count6==0){
    
    document.getElementById('display').innerHTML = email_result; 
