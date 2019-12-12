@@ -1,15 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <body  onload="startdate();startTime();" style="background-color:#F5F5F5;">
@@ -28,9 +18,7 @@
 
 
   <form id="start" autocomplete="off">
-  
-  
-  
+
   <p style="text-align:center; font-size:25px"><strong style="font-size:20px">Enter your Input :</strong></p>
   
   
@@ -42,10 +30,17 @@
   
   
   
-  <h1 style="font-size:15px; " align="center">   <label ><b>Password : </b></label> <input type="text" name="message"   id="pass_word" align="center"> </br></br>
+  <h1 style="font-size:15px; " align="center">   <label ><b>Password : </b></label> <input type="text" name="message"   id="pass_word" align="center"> </br>
   </form>
 
-<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:35px; width:70px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="clearFunction()" align="center" style="height:35px; width:70px"> <input type="button" align="center" style="height:35px; width:80px" onclick="window.location.href = 'https://karthikk12.github.io/MyFirstRepo1/';" value="MFA Page"/> </font>
+<font size=5><input type="submit" value="Mock"  onclick="myFunction()" align="center" style="height:30px; width:65px"> <font size=7><input type="reset" value="Clear" id="myclear" onclick="clearFunction()" align="center" style="height:30px; width:65px"> </font>
+
+<div>
+
+<div  style="float:left;"><input type="button" align="center" style="height:23px; width:126px" onclick="window.location.href = 'https://karthikk12.github.io/error_code/';" value="Error_Code Finder"/> </font></div>
+
+<div align="right"><input type="button" align="center" style="height:23px; width:120px" onclick="window.location.href = 'https://karthikk12.github.io/MyFirstRepo1/';" value="MFA Page"/> </font></div>
+</div>
 
 
 <hr>
@@ -65,8 +60,7 @@ p.ex1 {
   <p>Mocked Email_id/ User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='display'></span></p>
   
   <p>Mocked Password : <span style="color:Black; font-size:20px ; font-weight:bold" id='display2'></span></p>
-  </br>
-  </br>
+  <hr style="border-top: dotted 1px;" />
   
  <p style="text-align:left;">Length of Online ID : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen3'></p>
   <p>Length of Email_id/User Name : <span style="color:Black; font-size:20px ; font-weight:bold" id='displayLen1'></span></p>
@@ -201,15 +195,6 @@ continue;
 
 
 }
-
-
-
-
-
-
-
-
-
 
 
 var j=1;
@@ -360,11 +345,8 @@ document.getElementById('display3').innerHTML = online_name.toString();
 
 	
 	}
-	
-	
-	
-	
-	  if(document.getElementById("myCheck").checked==true){
+
+  if(document.getElementById("myCheck").checked==true){
      
 	 var start_em_str9=document.getElementById("online_input").value;
      var start_str3 = document.getElementById("user_input").value;
@@ -459,13 +441,6 @@ continue;
 }
 
 }
-
-
-
-
-
-
-
 
 
 var j=1;
