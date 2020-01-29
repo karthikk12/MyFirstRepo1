@@ -1,0 +1,51 @@
+package com.demo.optimus_c4;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.htmlcleaner.CleanerProperties;
+import org.htmlcleaner.DomSerializer;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
+import org.w3c.dom.Document;
+
+public class MyScriptFrame {
+	static StringBuffer sb1 = new StringBuffer();
+
+	public static String myXpathEvaluationObject(String contents, String cut_xpath)
+			throws ParserConfigurationException, Exception {
+		String content_line = contents;
+		TagNode tagNodes = new HtmlCleaner().clean(content_line);
+		Document docs = new DomSerializer(new CleanerProperties()).createDOM(tagNodes);
+
+		XPath xpath = (XPath) XPathFactory.newInstance().newXPath();
+
+		String result = (String) xpath.evaluate(cut_xpath, docs, XPathConstants.STRING);
+
+		return result;
+	}
+
+	public static int converttoValidNumber(String getvalues) {
+		sb1.delete(0, sb1.length());
+		int length = getvalues.length();
+		for (int i = 0; i < length; i++) {
+			char c = getvalues.charAt(i);
+			if (Character.isDigit(c) || getvalues.charAt(i) == '.') {
+				sb1.append(c);
+			} else {
+				continue;
+			}
+		}
+		String validamount = sb1.toString();
+		int result = Integer.parseInt(validamount);
+		return result;
+	}
+
+	public static String trim(String response) {
+		String trim_result = response.trim();
+		return trim_result;
+	}
+}

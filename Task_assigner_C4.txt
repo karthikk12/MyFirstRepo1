@@ -1,0 +1,922 @@
+package com.demo.optimus_c4;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.poi.hssf.util.HSSFColor.GREEN;
+import org.apache.poi.hssf.util.HSSFColor.GREY_25_PERCENT;
+import org.apache.poi.hssf.util.HSSFColor.GREY_40_PERCENT;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import javax.swing.JProgressBar;
+import javax.swing.JSeparator;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.UIManager;
+
+public class Auto_assigner_c4 extends MyScriptFrame {
+	static CloseableHttpClient clients = HttpClients.createDefault();
+	static StringBuffer sb = new StringBuffer();
+	static StringBuffer totaltickets = new StringBuffer();
+	static List<String> sepline = new ArrayList<String>();
+	static List<String> hrefvalues = new ArrayList<String>();
+	static List<String> ahreftag = new ArrayList<String>();
+	static List<String> demotcks = new ArrayList<String>();
+	static List<String> tickets = new ArrayList<String>();
+	static List<String> script_name = new ArrayList<String>();
+	static List<String> teammembers = new ArrayList<String>();
+	static List<String> errorcode = new ArrayList<String>();
+	static List<Integer> Grade = new ArrayList<Integer>();
+	static List<String> headings = new ArrayList<String>();
+	static List<String> Countcalc = new ArrayList<String>();
+	static List<String> Created_status = new ArrayList<String>();
+	static List<String> assignee_name = new ArrayList<String>();
+	final static String MAIN_URL = "http://172.22.106.43:8087/tasks";
+	final static String INNER_URL = "http://172.22.106.43:8087/tasks/internal";
+	static Map<Integer, String> mymap = new HashMap<Integer, String>();
+	static List<String> scriptstore = new ArrayList<String>();
+	static String[] myarray = new String[500];
+	static int retrycount = 1;
+	static int other_cnt = 0;
+	static int rem_value;
+	private JFrame frame;
+	private static JTextField Ticketfield;
+	private static JTextField Otherfield;
+	private static JTextField Workfield;
+	private static JTextField statusfield;
+	private static JTextField pathfield;
+	private static JTextField messagefield;
+
+	protected static void initialise(String manager, String developer) throws Exception {
+
+		HttpGet get = new HttpGet(MAIN_URL);
+		HttpResponse response = clients.execute(get);
+		int rescode = response.getStatusLine().getStatusCode();
+		if (rescode == 200) {
+			Scanner sc = new Scanner(response.getEntity().getContent());
+			while (sc.hasNext()) {
+				sb.append(sc.nextLine());
+				sb.append(System.lineSeparator());
+			}
+		} else {
+			if (retrycount == 2) {
+				System.out.println("Please check the Main URL....");
+				System.exit(0);
+			}
+			System.out.println("Retrying count : " + retrycount++);
+			initialise(manager, developer);
+		}
+		sb.delete(0, sb.length());
+
+		postdatas(rescode, manager, developer);
+	}
+
+	private static void filter_tcks(String local_copy, Map mymap, String manager, String developer)
+			throws ParserConfigurationException, Exception {
+		String refvalue = "";
+		String cutter = StringUtils.substringBetween(local_copy, "select-checkbox", "</body>");
+
+		sb.append("<html>").append(System.lineSeparator()).append("<body>").append(System.lineSeparator())
+				.append(cutter).append(System.lineSeparator()).append("</body>").append(System.lineSeparator())
+				.append("</html>");
+		String tck_copy = sb.toString();
+		sb.delete(0, sb.length());
+		Scanner scs4 = new Scanner(tck_copy);
+		while (scs4.hasNext()) {
+			String lines = scs4.nextLine();
+			if (StringUtils.containsIgnoreCase(lines, "<a href")) {
+				sb.append(lines).append(System.lineSeparator());
+				String passer = sb.toString();
+				hrefvalues.add(passer);
+				sb.delete(0, sb.length());
+
+			}
+		}
+		sb.delete(0, sb.length());
+		tckt_seperator(hrefvalues, mymap, local_copy, manager, developer);
+	}
+
+	private static void separate_it(String getlines, String local_copy, String manager, String developer)
+			throws ParserConfigurationException, Exception {
+		int count = 0;
+		int counter = 0;
+		int i = 0;
+		Scanner scs1 = new Scanner(getlines);
+		while (scs1.hasNext()) {
+			String lines = scs1.nextLine();
+			if (!lines.isEmpty()) {
+				count++;
+			}
+		}
+		sb.delete(0, sb.length());
+		Scanner scs2 = new Scanner(getlines);
+		while (scs2.hasNext()) {
+			boolean check = scs2.hasNext();
+			String element = scs2.nextLine();
+			if (check == true) {
+				sb.append(element).append(System.lineSeparator());
+				if (StringUtils.equalsIgnoreCase(element, "open")
+						|| StringUtils.containsIgnoreCase(element, "in Progress")
+						|| StringUtils.containsIgnoreCase(element, "Closed")
+						|| StringUtils.containsIgnoreCase(element, "Done")) {
+					myarray[counter++] = sb.toString();
+					sb.delete(0, sb.length());
+				}
+			}
+		}
+		for (int j = 0; j < myarray.length - 1; j++) {
+			String linechck = myarray[j];
+			if (!StringUtils.isEmpty(linechck)) {
+				sepline.add(linechck);
+			}
+		}
+		sb.delete(0, sb.length());
+		for (int ctr = 0; ctr < sepline.size(); ctr++) {
+			int counts = 0;
+			Scanner scs3 = new Scanner(sepline.get(ctr));
+			while (scs3.hasNext()) {
+				String eachline = scs3.nextLine();
+				counts++;
+				if (counts == 2 || counts == 5 || counts == 9 || counts == 11) {
+					sb.append(eachline).append("-");
+				}
+			}
+			mymap.put(ctr, sb.toString());
+			sb.delete(0, sb.length());
+		}
+		Iterator<Integer> mapit = mymap.keySet().iterator();
+		while (mapit.hasNext()) {
+			int index = mapit.next();
+			String values = mymap.get(index);
+			scriptstore.add(values);
+			// System.out.println("Index " + index + "-----------------" +
+			// "Values " + values);
+		}
+		sb.delete(0, sb.length());
+		filter_tcks(local_copy, mymap, manager, developer);
+	}
+
+	private static void tckt_seperator(List hrefvalues, Map mymap, String local_copy, String manager, String developer)
+			throws ParserConfigurationException, Exception {
+
+		String values = "";
+		for (int index = 0; index < hrefvalues.size(); index++) {
+			String getvalues = (String) hrefvalues.get(index);
+			ahreftag.add(getvalues);
+			values = myXpathEvaluationObject(getvalues, "//*[@href]");
+			tickets.add(values);
+		}
+		category(tickets, hrefvalues, mymap, local_copy, ahreftag, manager, developer);
+	}
+
+	private static void list_it(String response, int count, String local_copy, String manager, String developer)
+			throws ParserConfigurationException, Exception {
+		sb.delete(0, sb.length());
+		sb.append("<html>").append(System.lineSeparator()).append("<body>").append(System.lineSeparator())
+				.append(response).append(System.lineSeparator()).append("</body>").append(System.lineSeparator())
+				.append("</html>");
+		String res = sb.toString();
+		sb.delete(0, sb.length());
+		String result = myXpathEvaluationObject(res, "/html/body");
+		Scanner scs = new Scanner(result);
+		while (scs.hasNext()) {
+			String lines = scs.nextLine();
+			if (!lines.isEmpty()) {
+				sb.append(lines);
+				sb.append(System.lineSeparator());
+			}
+		}
+		separate_it(sb.toString(), local_copy, manager, developer);
+	}
+
+	private static void looper_err_scr(String local_copy, List tickets, List hrefvalues, Map mymap, List ahreftag,
+			List created_status, List assigne_name, String manager, String developer) throws IOException {
+		String scriptname = "";
+		String error_code = "";
+		String react_counts = "";
+		String pro_counts = "";
+		int gradeno = 0;
+		String[] teamnames = new String[4];
+		int tercounter = 0;
+		teamnames[0] = "Mohan";
+		teamnames[1] = "Balaji";
+		teamnames[2] = "Karthik";
+		teamnames[3] = "Vignesh";
+		for (int itr = 0; itr < scriptstore.size(); itr++) {
+			tercounter++;
+			if (tercounter == 4) {
+				tercounter = 0;
+			}
+			gradeno++;
+			String names = scriptstore.get(itr);
+			StringTokenizer tokenize = new StringTokenizer(names, "-");
+			while (tokenize.hasMoreTokens()) {
+				scriptname = tokenize.nextToken();
+				error_code = tokenize.nextToken();
+				pro_counts = tokenize.nextToken();
+				react_counts = tokenize.nextToken();
+			}
+			int pro_number_count = converttoValidNumber(pro_counts);
+			int react_number_count = converttoValidNumber(react_counts);
+			if (react_number_count == 0) {
+				for (int ctr = 0; ctr < pro_number_count; ctr++) {
+					script_name.add(scriptname);
+					errorcode.add(error_code);
+					Grade.add(gradeno);
+					teammembers.add(teamnames[tercounter]);
+				}
+			} else if (pro_number_count == 0) {
+				for (int ctr = 0; ctr < react_number_count; ctr++) {
+					script_name.add(scriptname);
+					errorcode.add(error_code);
+					Grade.add(gradeno);
+					teammembers.add(teamnames[tercounter]);
+				}
+
+			} else {
+				for (int proctr = 0; proctr < pro_number_count; proctr++) {
+					script_name.add(scriptname);
+					errorcode.add(error_code);
+					Grade.add(gradeno);
+					teammembers.add(teamnames[tercounter]);
+				}
+				for (int reactr = 0; reactr < react_number_count; reactr++) {
+					script_name.add(scriptname);
+					errorcode.add(error_code);
+					Grade.add(gradeno);
+
+					teammembers.add(teamnames[tercounter]);
+				}
+			}
+		}
+		/*
+		 * check the stability of overall status(all should be same size
+		 * otherwise check the PGM) System.out.println(assign.tickets.size() +
+		 * " " + script_name.size() + " " + errorcode.size() + " " +
+		 * created_status.size() + " " + assigne_name.size());
+		 */
+		write_process(local_copy, tickets, hrefvalues, mymap, ahreftag, Created_status, assignee_name, script_name,
+				error_code, manager, developer);
+	}
+
+	// script name and err code and counts
+	private static void category(List tickets, List hrefvalues, Map mymap, String local_copy, List ahreftag,
+			String manager, String developer) throws ParserConfigurationException, Exception {
+		Iterator it1 = mymap.keySet().iterator();
+		while (it1.hasNext()) {
+			int key = (Integer) it1.next();
+			String values = (String) mymap.get(key);
+		}
+		sb.delete(0, sb.length());
+		assigneeName_Status(local_copy, tickets, hrefvalues, mymap, ahreftag, manager, developer);
+	}
+
+	private static void assigneeName_Status(String local_copy, List tickets, List hrefvalues, Map mymap, List ahreftag,
+			String manager, String developer) throws ParserConfigurationException, Exception {
+		String lines;
+		String getlines;
+		String cutlines;
+		int cnt = 0;
+		int main_cnt = 0;
+		sb.delete(0, sb.length());
+		String refvalue = "";
+		String cutter = StringUtils.substringBetween(local_copy, "select-checkbox", "</body>");
+
+		sb.append("<html>").append(System.lineSeparator()).append("<body>").append(System.lineSeparator())
+				.append(cutter).append(System.lineSeparator()).append("</body>").append(System.lineSeparator())
+				.append("</html>");
+		String tck_copys = sb.toString();
+		for (int index = 0; index < ahreftag.size(); index++) {
+			lines = (String) ahreftag.get(index);
+			getlines = lines.trim();
+			cutlines = StringUtils.substringBetween(tck_copys, getlines, "</tr>");
+			demotcks.add(cutlines);
+		}
+
+		for (int itr = 0; itr < demotcks.size(); itr++) {
+			cnt = 0;
+			String iterator = demotcks.get(itr);
+			Scanner scs6 = new Scanner(iterator);
+			while (scs6.hasNext()) {
+				String eachline = scs6.nextLine();
+				cnt++;
+				if (cnt == 24) {
+					String cutnew = StringUtils.substringBetween(eachline, ">", "</");
+					String trim_created_status = cutnew.trim();
+					Created_status.add(trim_created_status);
+				}
+				if (cnt == 73) {
+					String cutnew2 = StringUtils.substringBetween(eachline, ">", "</");
+					String trim_assigne = cutnew2.trim();
+					assignee_name.add(trim_assigne);
+				}
+			}
+		}
+		looper_err_scr(local_copy, tickets, hrefvalues, mymap, ahreftag, Created_status, assignee_name, manager,
+				developer);
+	}
+
+	private static void size_err_detector(List tickets, List Created_status, List assignee_name, List script_name,
+			List Grade) {
+		System.out.println("Total tickets size : " + tickets.size());
+		System.out.println("Script Name size : " + script_name.size());
+		System.out.println("Created Status size : " + Created_status.size());
+		System.out.println("Assignee Name size : " + assignee_name.size());
+		System.out.println("Grade size : " + Grade.size());
+	}
+
+	private static void validation(String response, String manager, String developer)
+			throws ParserConfigurationException, Exception {
+		String local_copy = response;
+		int count = 0;
+		String result = StringUtils.substringBetween(response, "<tbody>", "</tbody>");
+		Scanner total_tckts = new Scanner(result);
+		while (total_tckts.hasNext()) {
+			String no_of_tcs = total_tckts.nextLine();
+			String trimres = trim(no_of_tcs);
+			sb.append(trimres).append(System.lineSeparator());
+			if (StringUtils.containsIgnoreCase(trimres, "<th>")) {
+				count++;
+			}
+		}
+		list_it(sb.toString(), count, local_copy, manager, developer);
+
+	}
+
+	// print the entire datas
+	private static void write_process(String local_copy, List tickets2, List hrefvalues2, Map mymap2, List ahreftag2,
+			List<String> created_status2, List<String> assignee_name2, List<String> script_name2, String error_code,
+			String manager, String developer) throws IOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("HH:ss");
+		Date date1 = new Date();
+		Date date2 = new Date();
+		String datenow = sdf.format(date1);
+		String secnow = sdf1.format(date2);
+		String s_name = "snagarajan1";
+		String k_name = "kbaskaran";
+		String v_name = "vbalakrishn";
+		String m_name = "mjayaraj";
+		String b_name = "ssampathkum";
+		String s_ori_name = "Saraswathi";
+		String k_ori_name = "Karthik";
+		String v_ori_name = "Vignesh";
+		String m_ori_name = "Mohan";
+		String b_ori_name = "Balaji";
+		int kcount = 0;
+		int mcount = 0;
+		int scount = 0;
+		int bcount = 0;
+		int vcount = 0;
+		String successmessage = "FILE CREATED SUCCESSFULLY";
+		String default_name = "System";
+		int ticket_size = tickets.size();
+		int errcode_size = errorcode.size();
+		int cr_status = Created_status.size();
+		int assignestatus_size = assignee_name.size();
+		int grade_size = Grade.size();
+
+		int total = 12;
+		try {
+			XSSFWorkbook book = new XSSFWorkbook();
+			XSSFSheet sheet = book.createSheet("TICKETS");
+			XSSFCellStyle style = book.createCellStyle();
+			CellStyle cellstyle = book.createCellStyle();
+			CellStyle cellstyles = book.createCellStyle();
+			CellStyle cellstyle2 = book.createCellStyle();
+			XSSFFont font = book.createFont();
+
+			style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+
+			XSSFRow row;
+			row = sheet.createRow(0);
+			List<String> headings = Head_call();
+
+			for (int mainitr = 0; mainitr < headings.size(); mainitr++) {
+				String cellname = "cell" + mainitr;
+				Cell cellnames = row.createCell(mainitr);
+				cellnames.setCellValue(headings.get(mainitr));
+				cellstyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+				cellstyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				cellnames.setCellStyle(cellstyle);
+				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+				cellstyle.setFont(font);
+				cellnames.setCellStyle(style);
+				cellnames.setCellStyle(cellstyle);
+			}
+
+			if (ticket_size == errorcode.size() && ticket_size == Created_status.size()
+					&& ticket_size == assignee_name.size() && ticket_size == Grade.size()) {
+				for (int i = 0; i < tickets.size(); i++) {
+					row = sheet.createRow(i + 1);
+					for (int j = 0; j < 7; j++) {
+						Cell cell = row.createCell(j);
+
+						if (cell.getColumnIndex() == 0) {
+							cell.setCellValue(tickets.get(i));
+							cell.setCellStyle(style);
+						}
+						if (cell.getColumnIndex() == 1) {
+							cell.setCellValue(script_name.get(i));
+							cell.setCellStyle(style);
+						}
+						if (cell.getColumnIndex() == 2) {
+							cell.setCellValue(errorcode.get(i));
+							cell.setCellStyle(style);
+						}
+						if (cell.getColumnIndex() == 3) {
+							cell.setCellValue(Created_status.get(i));
+							cell.setCellStyle(style);
+						}
+						if (cell.getColumnIndex() == 4) {
+							cell.setCellValue(Grade.get(i));
+							cell.setCellStyle(style);
+						}
+						if (cell.getColumnIndex() == 5) {
+							cell.setCellValue(assignee_name.get(i));
+							cell.setCellStyle(style);
+						}
+						if (cell.getColumnIndex() == 5) {
+							if (StringUtils.containsIgnoreCase(assignee_name.get(i), "m_name")) {
+								mcount++;
+								cell.setCellValue(m_ori_name);
+								cell.setCellStyle(style);
+							} else if (StringUtils.containsIgnoreCase(assignee_name.get(i), "v_name")) {
+								vcount++;
+								cell.setCellValue(v_ori_name);
+								cell.setCellStyle(style);
+							} else if (StringUtils.containsIgnoreCase(assignee_name.get(i), "k_name")) {
+								kcount++;
+								cell.setCellValue(k_ori_name);
+								cell.setCellStyle(style);
+							} else if (StringUtils.containsIgnoreCase(assignee_name.get(i), "b_name")) {
+								bcount++;
+								cell.setCellValue(b_ori_name);
+								cell.setCellStyle(style);
+							} else if (StringUtils.containsIgnoreCase(script_name.get(i), "q2tower_api2.scr")) {
+								scount++;
+								cell.setCellValue(s_ori_name);
+								cell.setCellStyle(style);
+							} else if ((StringUtils.containsIgnoreCase(Created_status.get(i), "In progress")
+									&& StringUtils.containsIgnoreCase(assignee_name.get(i), b_name))) {
+								bcount++;
+								cell.setCellValue(b_ori_name);
+								cell.setCellStyle(style);
+							} else if ((StringUtils.containsIgnoreCase(Created_status.get(i), "In progress")
+									&& StringUtils.containsIgnoreCase(assignee_name.get(i), k_name))) {
+								kcount++;
+								cell.setCellValue(k_ori_name);
+								cell.setCellStyle(style);
+							} else if ((StringUtils.containsIgnoreCase(Created_status.get(i), "In progress")
+									&& StringUtils.containsIgnoreCase(assignee_name.get(i), v_name))) {
+								vcount++;
+								cell.setCellValue(b_ori_name);
+								cell.setCellStyle(style);
+							} else if ((StringUtils.containsIgnoreCase(Created_status.get(i), "In progress")
+									&& StringUtils.containsIgnoreCase(assignee_name.get(i), s_name))) {
+								scount++;
+								cell.setCellValue(s_ori_name);
+								cell.setCellStyle(style);
+							} else if ((StringUtils.containsIgnoreCase(Created_status.get(i), "In progress")
+									&& StringUtils.containsIgnoreCase(assignee_name.get(i), m_name))) {
+								mcount++;
+								cell.setCellValue(m_ori_name);
+								cell.setCellStyle(style);
+							} else if (StringUtils.containsIgnoreCase(assignee_name.get(i), "System")
+									&& !StringUtils.containsIgnoreCase(script_name.get(i), "q2tower_api2.scr")) {
+
+								cell.setCellValue(teammembers.get(i));
+								cell.setCellStyle(style);
+							}
+						}
+						if (cell.getColumnIndex() == 6) {
+							if (!StringUtils.equalsIgnoreCase(assignee_name.get(i), s_name)
+									&& !StringUtils.equalsIgnoreCase(assignee_name.get(i), m_name)
+									&& !StringUtils.equalsIgnoreCase(assignee_name.get(i), k_name)
+									&& !StringUtils.equalsIgnoreCase(assignee_name.get(i), v_name)
+									&& !StringUtils.equalsIgnoreCase(assignee_name.get(i), b_name)
+									&& !StringUtils.equalsIgnoreCase(assignee_name.get(i), default_name)) {
+								other_cnt++;
+								cell.setCellValue("Assigned By IL Team");
+								cell.setCellStyle(style);
+							} else if (StringUtils.equalsIgnoreCase(errorcode.get(i), "999")) {
+								other_cnt++;
+								cell.setCellValue("Bank Statements");
+								cell.setCellStyle(style);
+							} else if (StringUtils.equalsIgnoreCase(script_name.get(i), "hint")) {
+								other_cnt++;
+								cell.setCellValue("Hint Script");
+								cell.setCellStyle(style);
+							}
+						}
+
+					}
+				}
+
+				for (int allign = 0; allign < total; allign++) {
+					sheet.autoSizeColumn(allign);
+				}
+
+				row = sheet.createRow(tickets.size() + 5);
+				Cell cellun = row.createCell(0);
+				cellun.setCellStyle(style);
+				cellun.setCellValue("Total Tickets : ");
+				cellstyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+				cellstyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				cellun.setCellStyle(cellstyle);
+				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+				cellstyle.setFont(font);
+				cellun.setCellStyle(style);
+				cellun.setCellStyle(cellstyle);
+				Cell cellu1 = row.createCell(1);
+				cellu1.setCellValue(tickets.size());
+				cellu1.setCellStyle(style);
+				String value1 = String.valueOf(tickets.size());
+				Ticketfield.setText(value1);
+				Ticketfield.setBackground(Color.lightGray);
+
+				row = sheet.createRow(tickets.size() + 6);
+				cellun = row.createCell(0);
+				cellun.setCellStyle(style);
+				cellun.setCellValue("Others : ");
+				cellstyles.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+				cellstyles.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				cellun.setCellStyle(cellstyle);
+				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+				cellstyles.setFont(font);
+				cellun.setCellStyle(style);
+				cellun.setCellStyle(cellstyles);
+				cellu1 = row.createCell(1);
+				cellu1.setCellValue(other_cnt);
+				cellu1.setCellStyle(style);
+				String value2 = String.valueOf(other_cnt);
+				Otherfield.setText(value2);
+				Otherfield.setBackground(Color.YELLOW);
+
+				row = sheet.createRow(tickets.size() + 7);
+				cellun = row.createCell(0);
+				cellun.setCellStyle(style);
+				rem_value = ticket_size - other_cnt;
+				cellun.setCellValue("Need to Work : ");
+
+				cellstyle2.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+				cellstyle2.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				cellun.setCellStyle(cellstyle);
+				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+				cellstyle2.setFont(font);
+				cellun.setCellStyle(style);
+				cellun.setCellStyle(cellstyle2);
+				String value3 = String.valueOf(rem_value);
+				Workfield.setText(value3);
+				Workfield.setBackground(Color.green);
+
+				cellu1 = row.createCell(1);
+				cellu1.setCellValue(rem_value);
+				cellu1.setCellStyle(style);
+
+				row = sheet.createRow(tickets.size() + 9);
+				cellun = row.createCell(0);
+				cellun.setCellStyle(style);
+				cellun.setCellValue("Manager : ");
+
+				cellstyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+				cellstyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				cellun.setCellStyle(cellstyle);
+				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+				cellstyle.setFont(font);
+				cellun.setCellStyle(style);
+				cellun.setCellStyle(cellstyle);
+
+				cellu1 = row.createCell(1);
+				cellu1.setCellValue(manager);
+				cellu1.setCellStyle(style);
+
+				row = sheet.createRow(tickets.size() + 10);
+				cellun = row.createCell(0);
+				cellun.setCellStyle(style);
+				cellun.setCellValue("Developer : ");
+				cellstyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+				cellstyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+				cellun.setCellStyle(cellstyle);
+				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+				cellstyle.setFont(font);
+				cellun.setCellStyle(style);
+				cellun.setCellStyle(cellstyle);
+				cellu1 = row.createCell(1);
+				cellu1.setCellValue(developer);
+				cellu1.setCellStyle(style);
+				// System.out.println(kcount + " " + mcount + " " + vcount + " "
+				// + scount + " " + bcount);
+
+				String filename = "D:" + "\\Assignment  " + datenow + ".xlsx";
+				FileOutputStream out = new FileOutputStream(new File(filename));
+				book.write(out);
+				System.out.println("Created Path : " + filename);
+				pathfield.setText(filename);
+				pathfield.setBackground(Color.GREEN);
+				System.out.println("");
+				System.out.println("!!!!...............FILE CREATED SUCCESSFULLY.................!!!");
+				messagefield.setText("!...FILE CREATED SUCCESSFULLY....!");
+				messagefield.setBackground(Color.GREEN);
+
+			} else {
+				System.out.println("Sizes are not equal............Please check");
+				System.out.println("");
+				size_err_detector(tickets, Created_status, assignee_name, script_name, Grade);
+
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("ERROR ::--->" + e);
+			System.out.println(
+					"Message ::---->The File is already in Open state.....Please close it and run the program");
+			messagefield.setText("File is already Open Please close it");
+			messagefield.setBackground(Color.RED);
+
+		}
+	}
+
+	private static List<String> Head_call() {
+
+		headings.add("TICKET CREATED");
+		headings.add("SCRIPT NAME");
+		headings.add("ERROR CODE");
+		headings.add("STATUS");
+		headings.add("PRIORITY");
+		headings.add("ASSIGNED TO");
+		headings.add("COMMENTS");
+		return headings;
+	}
+
+	protected static void postdatas(int responsecode, String manager, String developer)
+			throws ParserConfigurationException, Exception {
+		GetMethod getMethods = new GetMethod();
+		HttpClient httpClient = new HttpClient();
+		PostMethod postMethod = new PostMethod(INNER_URL);
+		postMethod.addParameter("selectedManager", manager);
+		postMethod.addParameter("SelectedDeveloper", developer);
+		httpClient.executeMethod(postMethod);
+		String getresbody = new String(postMethod.getResponseBody());
+		if (StringUtils.isEmpty(getresbody)) {
+			System.out.println("Reponse body is Empty");
+			System.exit(0);
+		}
+		if (responsecode == 200) {
+			statusfield.setText("SUCCESS");
+			statusfield.setBackground(Color.GREEN);
+			System.out.println("Successfully Connected : ----------> " + responsecode + "%");
+			System.out.println("");
+			validation(getresbody, manager, developer);
+		} else {
+			statusfield.setText("FAILURE");
+			statusfield.setBackground(Color.RED);
+			messagefield.setText("Connection Failed...");
+		}
+	}
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Auto_assigner_c4 window = new Auto_assigner_c4();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Auto_assigner_c4() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame("STARTING >>>> AUTO LAUNCH");
+		frame.setBackground(new Color(51, 153, 204));
+		frame.getContentPane().setBackground(new Color(153, 204, 204));
+		frame.getContentPane().setForeground(Color.CYAN);
+		frame.setBounds(100, 100, 848, 480);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		final JCheckBox shrl = new JCheckBox("Shirel");
+		shrl.setForeground(Color.RED);
+		shrl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		shrl.setBounds(384, 83, 97, 23);
+		frame.getContentPane().add(shrl);
+
+		final JCheckBox COGAL = new JCheckBox("Cognizant Alaska");
+		COGAL.setForeground(Color.RED);
+		COGAL.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		COGAL.setBounds(146, 146, 150, 23);
+		frame.getContentPane().add(COGAL);
+
+		final JCheckBox all = new JCheckBox("All");
+		all.setForeground(Color.RED);
+		all.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		all.setBounds(645, 146, 97, 23);
+		frame.getContentPane().add(all);
+
+		final JButton btnNewButton = new JButton("Launch");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton.setForeground(Color.BLACK);
+		btnNewButton.setBounds(351, 209, 89, 23);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (shrl.isSelected() && COGAL.isSelected() && (!all.isSelected())) {
+					String manager = "Shirel";
+					String developer = "Cognizant-Alaska";
+					try {
+						initialise(manager, developer);
+					} catch (Exception e1) {
+
+						e1.printStackTrace();
+					}
+
+				} else if (shrl.isSelected() && all.isSelected() && (!COGAL.isSelected())) {
+					String manager = "Shirel";
+					String developer = "All";
+					try {
+						initialise(manager, developer);
+					} catch (Exception e1) {
+
+						e1.printStackTrace();
+					}
+
+				}
+				else if (shrl.isSelected() && all.isSelected() && COGAL.isSelected()) {
+					messagefield.setText("Please Select any one developer");
+					messagefield.setBackground(Color.RED);
+
+				}				
+				else if (shrl.isSelected()) {
+					messagefield.setText("Please Select developer");
+					messagefield.setBackground(Color.RED);
+				} else if (all.isSelected()) {
+					messagefield.setText("Please Select Manager");
+					messagefield.setBackground(Color.RED);
+				} else if (COGAL.isSelected()) {
+					messagefield.setText("Please Select Manager");
+					messagefield.setBackground(Color.RED);
+				}
+
+			}
+		});
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(btnNewButton);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(-80, 113, 922, 26);
+		frame.getContentPane().add(separator);
+
+		JLabel lblTask = new JLabel("AUTO TASK ASSIGNER #C4");
+		lblTask.setBackground(new Color(0, 255, 255));
+		lblTask.setForeground(Color.BLACK);
+		lblTask.setFont(new Font("Verdana", Font.BOLD, 15));
+		lblTask.setBounds(297, 36, 231, 14);
+		frame.getContentPane().add(lblTask);
+
+		JLabel lblManager = new JLabel("Manager :");
+		lblManager.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblManager.setBounds(309, 87, 86, 14);
+		frame.getContentPane().add(lblManager);
+
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(445, 120, 1, 164);
+		frame.getContentPane().add(separator_1);
+
+		JLabel lblDeveloper = new JLabel("Developer :");
+		lblDeveloper.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblDeveloper.setBounds(70, 150, 86, 14);
+		frame.getContentPane().add(lblDeveloper);
+
+		JLabel lblDeveloper_1 = new JLabel("Developer : ");
+		lblDeveloper_1.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblDeveloper_1.setBounds(566, 150, 87, 14);
+		frame.getContentPane().add(lblDeveloper_1);
+
+		JLabel lblNewLabel = new JLabel("Total Tickets : ");
+		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblNewLabel.setBounds(10, 306, 113, 14);
+		frame.getContentPane().add(lblNewLabel);
+
+		JLabel lblOthers = new JLabel("Others :");
+		lblOthers.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblOthers.setBounds(49, 346, 52, 14);
+		frame.getContentPane().add(lblOthers);
+
+		JLabel lblNeedToWork = new JLabel("Need To Work :");
+		lblNeedToWork.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblNeedToWork.setBounds(10, 393, 106, 14);
+		frame.getContentPane().add(lblNeedToWork);
+
+		Ticketfield = new JTextField();
+		Ticketfield.setFont(new Font("Tahoma", Font.BOLD, 11));
+		Ticketfield.setForeground(Color.BLACK);
+		Ticketfield.setBounds(123, 304, 86, 20);
+		frame.getContentPane().add(Ticketfield);
+		Ticketfield.setColumns(10);
+
+		Otherfield = new JTextField();
+		Otherfield.setFont(new Font("Tahoma", Font.BOLD, 11));
+		Otherfield.setBounds(123, 344, 86, 20);
+		frame.getContentPane().add(Otherfield);
+		Otherfield.setColumns(10);
+
+		Workfield = new JTextField();
+		Workfield.setFont(new Font("Tahoma", Font.BOLD, 11));
+		Workfield.setBounds(123, 391, 86, 20);
+		frame.getContentPane().add(Workfield);
+		Workfield.setColumns(10);
+
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(439, 229, 1, 201);
+		frame.getContentPane().add(separator_2);
+
+		JLabel lblNewLabel_1 = new JLabel("Conn Status :");
+		lblNewLabel_1.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblNewLabel_1.setBounds(496, 306, 97, 14);
+		frame.getContentPane().add(lblNewLabel_1);
+
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setBounds(386, 282, -383, 2);
+		frame.getContentPane().add(separator_3);
+
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setBounds(10, 258, 832, 23);
+		frame.getContentPane().add(separator_4);
+
+		JLabel lblNewLabel_2 = new JLabel("Path :");
+		lblNewLabel_2.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblNewLabel_2.setBounds(548, 346, 46, 14);
+		frame.getContentPane().add(lblNewLabel_2);
+
+		statusfield = new JTextField();
+		statusfield.setFont(new Font("Tahoma", Font.BOLD, 11));
+		statusfield.setBounds(591, 303, 231, 20);
+		frame.getContentPane().add(statusfield);
+		statusfield.setColumns(10);
+
+		pathfield = new JTextField();
+		pathfield.setFont(new Font("Tahoma", Font.BOLD, 11));
+		pathfield.setBounds(591, 340, 231, 20);
+		frame.getContentPane().add(pathfield);
+		pathfield.setColumns(10);
+
+		JLabel lblMessage = new JLabel("MESSAGE :");
+		lblMessage.setFont(new Font("Verdana", Font.BOLD, 11));
+		lblMessage.setBounds(516, 393, 89, 14);
+		frame.getContentPane().add(lblMessage);
+
+		messagefield = new JTextField();
+		messagefield.setFont(new Font("Tahoma", Font.BOLD, 11));
+		messagefield.setBounds(591, 390, 231, 20);
+		frame.getContentPane().add(messagefield);
+		messagefield.setColumns(10);
+
+	}
+}
