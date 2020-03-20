@@ -1,0 +1,388 @@
+TICKET COMMENTS 
+
+INCORRECT CREDENTIALS : 
+
+Accounts are getting 103 due to invalid credentials. While verifying with other positive accounts, they are working fine. FI health is fine.
+
+While analyzing your issue, we found that the customer entered incorrect credentials while adding the account. Please ask customer to re add the account with valid credentials.
+
+While analyzing your issue, we found that the customer changed their login credentials and not yet updated in our product. Please ask customer to update credentials and refresh again. Report if any issue still persist.
+
+We are unable to research on your originally reported issue due to the customer changed their login credentials and not yet updated in our product. Please ask customer to update credentials and refresh again. Report if any issue still persist.
+
+
+We are unable to research on your originally reported issue due to invalid credentials. While referring the logs we could notice that there is some message for you in your online banking website about "Are you sure you want to remove Interstitial Portlet?" which prevents you from adding your account successfully in QBO. Hence login to your BB&T online banking website and take necessary action. Once this is done please try adding your account in QBO with valid credentials. Please report if any issue still persist.
+
+While analyzing your issue, we found that the customer needs to login to their website and provide the account information to confirm your identity and then refresh your QBO account.
+
+While analyzing your issue, we found that the customer with the set of login credentials has only one checking account with the US Bank. If the customer wants to update the account with different login credentials, please add that credentials to your mint account.	
+
+While analyzing your issue, we found that the customer entered incorrect credentials while adding the account. Please ask customer to re add the account with valid credentials and check the bank website has shown all the transactions. Report if any issue still persist after login to your account.
+
+We are unable to research on your originally reported issue due to invalid credentials. Please ask customer to re add the account with valid credentials and report back if issue still persists.
+
+While analyzing your issue, we found that the customer entered incorrect credentials while adding the account. Please ask customer to re add the account with valid credentials and check the bank website has shown all the accounts you have. Report if any issue still persist after login to your account.
+
+We are unable to research on your originally reported issue due to invalid credentials. While referring the logs we could notice that there is no accounts found in your bank summary page. Requesting the customer to check your bank website has shown all the bank accounts you have. If yes, please attach the screenshot and report us for further analysis.
+
+While analyzing your issue, we found that the customer entered incorrect credentials while adding the account. Please ask customer to re add the account with valid credentials. 
+If the issue persists, please provide us with the following information: 
+1. Have there been recent changes in your banking website when you directly login? If there are changes, what are those? 
+2. Are there any differences between Mint's login form and your bank's login page? 
+3. What is the exact URL you use to login to your account (login URL)? 
+4. Any information about what forms of security authentication your bank requires during log in. 
+5. Please confirm that you can successfully log in to your bank or institution directly by using same credentials which updated in product.
+
+While analyzing your issue, we found that the customer changed their login credentials and not yet updated in our product. Please ask customer to update credentials and refresh again. 
+If the issue persists, please provide us with the following information: 
+1. Have there been recent changes in your banking website when you directly login? If there are changes, what are those? 
+2. Are there any differences between Mint's login form and your bank's login page? 
+3. What is the exact URL you use to login to your account (login URL)? 
+4. Any information about what forms of security authentication your bank requires during log in. 
+5. Please confirm that you can successfully log in to your bank or institution directly by using same credentials which updated in product.
+
+Customer password credential format updated in our DB is "000000000" and for username is "xxxxxxxx" where as X denotes Capital letter,x denotes small letter,0 denotes numbers,# denotes special characters. Please do confirm with the customer whether the above credential format for username/password credential updated in the product is correct and is the same that he is using in the bank website. (1) If yes,please do report us back so that we will further analyze on the issue. (2) If No,kindly ask the customer to update the right credentials in the product as per site
+
+
+UPDATE PASSWORD : 
+
+While analyzing the issue, we found that the customer recently updated the password in the bank website but not in mint account. Requesting the customer to update your new password in mint and refresh your account.
+
+
+ACCOUNT LOCKED :
+
+While analyzing your issue, we found that the customer account is locked in the bank website due to login with incorrect credentials for multiple times. Requesting the customer to unlock your bank account and try to login with valid credentials. Report us if there any issue still persist after unlock your account in the bank website.
+
+While analyzing your issue, we found that the customer reported bank account has been locked due to login your account using the incorrect credentials multiple times. Requesting the customer to login to your bank account using valid credentials and refresh your mint account. report us if any issue still persist after once your login attempt reach the summary page on the bank website.  
+ 
+
+MFA	:
+
+Accounts are currently getting 185 due to unavailability of MFA answer.
+
+While analyzing your issue, we found that when our product trying to get details from your account, the bank website prompt for security question. Requesting the customer to login to your account for multiple times and provide answer for all the security question and then refresh the account.
+
+While analyzing your issue, we found that the customer needs to login to your account and provide the necessary security answer and then refresh your mint account.
+
+While analyzing your issue, we found that when our product trying to get details from your account, the bank website prompt for OTP. Requesting the customer to login to your account and provide necessary answer and then refresh the account.
+
+We are unable to research on originally reported issue due to when our product trying to get details from your account, the bank website prompt for security question. Requesting the customer to login to your account for multiple times and provide answer for all the security question and then report back if issue still persists.
+
+We are unable to research on originally reported issue due to when our product trying to get details from your account, the bank website prompt for OTP. Requesting the customer to login to your account and provide necessary answer and then report back if issue still persists.
+
+The accounts are now getting 185 due to MFA but by logs the error code 307 may caused by running in bim mode.
+
+The accounts are now getting 185 due to unavailability of OTP answer.
+	
+While analyzing your issue, we found that when our product trying to get details from your account, the bank website prompt for additional authentication question. Requesting the customer to login to your account for multiple times and provide answer for all the security question and then refresh the account.
+
+While analyzing your issue, we found that when our product trying to get details from your account, the bank website prompt the page for "Add profile information" which needs to do by the user. Requesting the customer to login to your account and provide answer for the verification question and then refresh the account.
+
+We are pleased to inform you that your issue has been resolved. The resolution has been implemented and this bank account should be ready for your use. Please proceed by providing correct One Time Password prompted in our product.
+
+While analyzing your issue, we found that when our product trying to get details from your account, the bank website prompt for security question. Requesting the customer to login to your account for multiple times and provide answer for all the security question and then refresh the account.
+
+For the reported customer, the issue caused due to the customer trying to login with incorrect MFA for the multiple times. So that the account get locked right now. Requesting the customer to unlock your account in the bank website by using valid credentials and security answer and re add your account to our product. 
+	
+MISSING TRANSACTION :
+
+Intuit - manual transaction
+QFX transaction - having ID, memo
+
+The customer reported mortgage accounts has no transactions in the bank website. If the customer still see any missing transactions please verify with your bank website and then refresh your account.
+
+While analyzing the issue, the customer reported for the missing transactions are all already updated in our database as per the website. If you still see any transactions are missing, please provide us following information:
+1) The name of the account ?
+2) The date range of missing transactions ?
+3) Is there any similar pattern is available in the missing transactions ?
+
+While analyzing the issue, the customer reported for the missing transactions are all already updated in our database as per the website. Requesting customer to refresh your account once again. If issue still persist, please report back and attach screenshots for further analysis.
+
+We have verified that your accounts are updated with the transactions available in website and no transactions were missing. If you still see any transactions are missing, please provide us the name of the account and the date range of missing transactions for further analysis.
+
+We have verified that the customer having the number of three accounts are already updated with the transactions upto the date and no transactions were missing. If you still see any transactions are missing, please contact to the product team.
+
+While analyzing the customer issue, we found that the customer reported for incorrect account balance is already updated correctly in our database as per the bank website. Requesting customer to refresh your account once again. If issue still persist, please report back and attach screenshots for further analysis.
+
+While analyzing the customer issue, we found that the customer reported for incorrect account balance is already updated correctly in our database as per the bank website. If the customer still see incorrect balance please reach product team.
+
+The transactions are successfully updated after changing the date range in CCDB.
+
+For the reported customer, all the transactions are updated in our database as per the website and there is no transactions as per customer mentioned. Requesting customer to login your bank account and verify your transactions once again. If you still see any transactions are missing, please report back and provide screenshot of missing transactions.
+
+Incorrect transaction amount :
+
+While analyzing the issue, for the reported customer all the transactions and amount are all already updated correctly in our database as per the website. Requesting customer to refresh your account and verify your transactions and amount once again with bank website.
+
+
+ONE TIME GLITCH : 
+
+The duplicate transactions issue was happening because of a one-time glitch on your banking website with respect to our product. We are pleased to inform you that your issue has been resolved. However, you will need to manually correct the existing duplicate transactions within the product as that cannot be resolved from our end.
+
+
+INCORRECT TRANSACTION:
+
+While analyzing the issue, we found that there are two transaction with description SiteGround Hostingand in this one transaction is shown with status obsolete. Requesting the customer to contact product team to hide the visibility of obsolete transaction.	
+	
+
+DUPLICATE ACCOUNT : 
+
+While analyzing your issue we found that there are two accounts with same account number and name in your online banking website which appears to be duplicate and causes issue in our product. Request the customer to check and act on the duplicate accounts in website (if both the accounts are different have different account names) and refresh your mint account for successful account connection.
+
+While analyzing your issue we found that there are two accounts with same account number and name which causes the issue in product. Requesting the customer to disconnect and reconnect the account in product.
+
+
+ACCOUNT DELETED :
+
+We are unable to research on your originally reported issue since customer has deleted the reported account in product. Kindly request the customer to add account in product and report back so that we can analyze the issue further. 
+
+
+PAGE NOT FOUND : 
+
+On analyzing your issue we have noted that we are receiving the error message "A technical error has occurred" while entering your credentials in banking website. Please verify by login to Macys online banking website. Once the issue is resolved, please re add the account in Mint by providing the same valid credentials you used in macys website. Report if any other issue still persist.
+
+While analyzing your issue, we cannot able to navigate the transaction page for the mortgage accounts from the website. Requesting the customer to provide the navigation link for getting your transaction details for the mortgage account and also verify once the customer uses the same URL "https://authentication.td.com/uap-ui/index.html?consumer=easyweb&locale=en_CA#/login/easyweb-getting-started" to access the account.
+
+While analyzing your issue, there is the link for "Go to new summary " on summary page after you login to your banking website. While hitting that link the account type of account named "Main Account" is classified as brokerage in Mint. So that your account is returned as investment account. Kindly requesting the customer to verify with your banking website.
+
+307
+For the reported customer, the issue is caused due to the accounts are not correctly added to our product. Please ask to the customer to disconnect and re connect your account.
+
+NO ISSUE :
+
+While analyzing your issue, we found that the customer reported account successfully able to discover and get details from the bank account. Requesting the customer to refresh the mint account and report us if there any issue still persist. 
+
+For the reported customer, we have verified that all the transactions are already successfully updated in our database as per the bank website. If the customer still see any missing transaction please disconnect and re connect your account.
+
+
+FIX : 
+
+For the reported customer currently accounts are refreshing fine.Other 101 error accounts are also refreshing fine now.Can see SOE dumps for 101.Need to check in detail and fix for 101,if possible with SOE dumps 
+
+
+Not solved by us :
+
+Customer mentioned that he is unable to select all payments. Payments are not supported by script engineering and the case should not be moved to error escalation.
+
+
+REFRESH OK : 
+
+We are pleased to inform you that your issue has been resolved. The resolution has been implemented and this bank account should be ready for your use. 
+
+Accounts are now refreshed to 0 fine. Other 101 error accounts in splunk logs are also now refreshing to 0.
+
+CCDB edit done to update transactions
+
+ERROR 179 : 
+
+We are sorry to inform you that this issue was occurring because of your previously opened sessions are not properly closed/logged out. Please logout from all your opened sessions and then try to logging into our product again. If you are facing similar issues, Please update your account after 10 to 15 minutes time interval to resolve this issue. If you still see any issue, please re-submit the incident and we will analyze further. 
+
+WEBSITE DOWN : 
+
+While analyzing your issue, we found that after posting your login credentials getting a page with the message " Account information is temporarily unavailable".it seems site is temporarily down. Please try refreshing your account later. 
+
+While analyzing your issue, we found that after hitting the bank URL getting a page with the message " Our website is unavailable due to scheduled maintenance". Thus It seems site is temporarily down. Please try refreshing your account later. 
+
+Getting error code 105 due to website down. 
+
+We are unable to research on the originally reported issue for the customer due to the bank website is temporarily unavailable. Possibly requesting the customer to login to bank website and check whether is there any user action is required like "We see that you are using our mobile banking application but are not enrolled in myBranch Online Banking. Would you like to complete your enrollment now?". If yes, please complete the required action and re add your account.
+
+OCG : 
+
+To resovle duplicate transaction isssue created an OCG inquiry #76404.
+
+JIRA DEPENDENCY:
+Ticket notes: 
+Issue reported for 101.Currently for the reported customer,it is prompting for MFA but no MFA is updated in our CCDB and due to which we are unable to proceed furthur.As per the customer comments, he already gave all the MFA answers but no MFA is being updated in our CCDB.
+Ticket has been created for many time.We are alreading having a JIRA for MFA not stored Issue.JIRA:https://jira.intuit.com/browse/FDSA-6152  
+
+Comments: 
+We are having dependency on JIRA:https://jira.intuit.com/browse/FDSA-6152  to proceed with this issue.Once the JIRA has been closed,please do ask the customer to try accessing the accounts again in the product and report us back in case of any issues still persists. 
+
+
+324:
+
+Please do ask the customer to disconnect and re-connect the accounts again to the product. Also, please verify that the account number and account name within the product for all accounts , exactly matches the 'account summary' page of your FI.  If there is no match, please modify your account within the product, to match the number and name exactly as it displayed on the account summary page of your FI. In case of any issues still persists, Please do re-submit the incident, we will research further. 
+
+
+While analyzing your issue, we found that there are multiple accounts shared similar account name "MC WORLD BUSINESS CREDIT" and this causes issue in our product. Requesting customer to make unique name for all your accounts in bank website and then refresh your account in our product. Report us if there any issue still persists.
+
+NO ACCOUNT FOUND:
+
+For the reported customer, there is no accounts found in bank website. Requesting customer to add account in your banking website and then refresh your account. Report us if there any issue still persists.
+
+While analyzing your issue, we found that there is no accounts found in your bank summary page. Requesting the customer to check your bank website has shown all the bank accounts you have. If yes, please attach the screenshot and report us for further analysis.
+
+We are unable to research on your originally reported issue due to unavailability of MFA answer. While referring the logs we could notice that there is no active accounts found in your bank summary page. Requesting the customer to check your bank website has shown all the bank accounts you have. If yes, please attach the screenshot and report us for further analysis.
+
+We are unable to research on your originally reported issue due to unavailability of OTP answer. Requesting the customer to login to your account and provide necessary answer and then refresh the account. While referring the logs we could notice that there is no active accounts found in your bank summary page. Please ask the customer to check your bank website has shown all the bank accounts you have. If yes, please attach the screenshot and report us for further analysis.
+
+USER ACTION:
+
+Getting error 108 due to User action required at bank website.
+
+We are unable to research on originally reported issue due to getting message "User action is required at the web site. Please update your Email address to complete your profile". Requesting customer to login bank website and take necessary action to complete your profile and then report back if issue still persists.
+
+While analyzing your issue, we found that there is user action is required at the website to Enter/Update email address after entering your credentials. Requesting customer to login bank website and take necessary action and then report back if issue still persists.
+
+MISCAT ACCOUNT:
+
+While analyzing this issue, we noticed that the affected account name doesn't contain any one of this keywords "Cash" or "Checking". Please update your account name as like "JOINT WROS CHECKING" or "JOINT WROS CASH. Please explain the customer that without those word we cant change the type.
+
+While analyzing this issue, we noticed that the affected account name doesn't contain any one of this keywords "Mortgage". Please update your account name that conatains "Mortgage" like "BSI MTG 7771 - Mortgage". Please explain the customer that without those word we can't change the type.
+
+While analyzing your issue, we found that there are two accounts shared with same name as JUD FREEMAN REVOCABLE LIVING TRUST Accounts and it causes issue in our product. Requesting customer to rename any one of your account sharing same name and make sure that all of your account have unique name and number and then refresh your account in our product.
+
+While analyzing your issue, we found that the customer reported account is already categorized as Mortgage in our database. If issue still persist, please try to disconnect and re connect your account.
+
+Line 145:
+
+The following proactive ticket were created for 0 error with the following ticket details "Proactive ticket created due to unhandled exceptions in script discard.scr: unexpected error script in line 145 with name NullPointerException with runId for example MA-200-b0f521da-75a3-49bd-99dd-7d5ed6b6d00c". When I search with the above tid in splunk, we found that logs for multiple scripts were available with same tid. The ticket was created for discard.scr but there was no null pointer exception for the mentioned tid for the same FI in Last 7 days. Hence we assume the ticket was created based on False alert. Dash team working on it. 
+
+Line 779:
+
+Based on the splunk query the error occurs in mohela script. https://fds-splunk-prod-qydc.corp.intuit.net/en-US/app/search/search?earliest=-7d%40h&latest=now&q=search%20index%3Dnextgen%20123146510485794%20%22IndexOutOfBoundsException%22&display.page.search.mode=verbose&dispatch.sample_ratio=1&sid=1561975120.1265310_E73A044A-F742-475D-B7E7-062CD8864A33
+
+index=nextgen 193514560333484 "IndexOutOfBoundsException"
+
+Assign ticket to Script owner - Noam Goren
+
+Enable Quicken: (mbfinancial.scr- 11466)
+
+HI, In order to resolve this issue you will need to login to your bank account and try to access your Profile->Service Center->Electronic Services->Online Banking Services->Quicken/Quickbooks->Register for Quicken and/or QuickBooks Direct Connect->Enroll, for all of the accounts displayed on your account summary page. Once the prompt is no longer appearing you should have access to your accounts from our product. If the issue is still persist please escalate back. Thanks
+
+CREDIT BALANCE 
+
+BANK = + MINT = - 
+
+As per our product terms, payments are returned as positive and pending as negative. That's why positive balance in bank website are shown as negative in our product. Hence, we have pleased to inform you that your accounts are working properly.
+
+BANK = - MINT = +
+
+It seems that in FI website, credit payment is over the actual usage. Hence our product shows over paid amount as positive balance. Please do ask the customer to verify it in FI website that the amount is over paid or not. If the amount is not over paid, Kindly do report us back.
+
+NOTES :
+The customer reported for inverse in credit card balance(negative sign in bank shown as positive in mint). As per our product terms, we are shows over paid amount as positive balance only and hence all accounts are correctly updated already in our database.
+
+Error 1001 : 
+
+https://jira.intuit.com/browse/E2EFDS-764
+
+FDP: "Failed_Internal_Error (1001)" "Failed_Unknown_Cause (1001)"
+
+https://jira.intuit.com/browse/PLF-8932
+
+FDP: 323 error for accounts with the same number and nickname but different balance and transactions: 
+
+https://jira.intuit.com/browse/FAT-8218
+
+https://jira.intuit.com/browse/FDPSPRT-1176
+
+Migration to FDP - Mint users see an incorrect balance :
+
+https://jira.intuit.com/browse/FDPSPRT-1070
+
+Migration to FDP - Mint users doesn't see new transactions :
+
+https://jira.intuit.com/browse/FDPSPRT-1003
+
+Migration to FDP - users experiencing credentialSets not refreshed post migration:
+
+https://jira.intuit.com/browse/FDPSPRT-833
+
+
+https://jira.intuit.com/browse/FDPSPRT-1184
+
+FDP: 323 error for accounts with the same number and different nickname.
+
+https://jira.intuit.com/browse/FAT-8762
+
+JIRA 169 : 
+
+https://jira.intuit.com/browse/FAT-8709
+
+Migration to FDP - Mint users see not updated available balance 
+
+https://jira.intuit.com/browse/FDPSPRT-952
+
+Refresh-All - Update refresh all api to include credentials in user actionable state - Error 185
+
+https://jira.intuit.com/browse/FAT-8771
+
+
+1. FDPSPRT-952 – Issues where Mint accounts are updating but the available balance is not updated.
+2. FDPSPRT-1124 – Issues where Mint accounts are updating but the balance customers see is 0.
+3. FDPSPRT-1003 – Issues where Mint accounts are not updating due to Major Account Type Change, you can confirm those customers with the next Splunk query: https://cgsm.splunk.intuit.com/en-GB/app/search/search?sid=1568130968.3058625_B8E7D0B9-BB6E-41DB-928B-411ABBA5AD90
+4. FDPSPRT-1268 – Issues where Mint accounts are updated but users can’t see new transactions.
+ 
+
+ACCOUNT INACTIVE:
+
+While analyzing your issue, we found that there is only four active account are shown in bank summary page and they are updating fine. The customer reported for the account named "Weir Street Visa" which is currently inactive and hence balance is showing zero. Requesting customer to login your banking website and verify once if reported account is active and shown in bank summary page. If yes, please re-submit incident for further analysis. 
+
+
+
+While analyzing your issue, we found that when our product trying to get details from your account, the bank website prompt for OTP. Requesting the customer to login to your account and provide necessary answer and then refresh the account.If the issue persist Kindly report back.
+
+
+Currently there is no issue for last 7 days. There is only junk characters in SOE dumbs..
+
+
+
+
+--------------------------------------------------------------------------------------------------
+While analyzing the issue in online banking website we are getting message "Sorry, we are unable to load this page at this time. Please try again later." so we cant reach your account summary page for further investigation. So kindly ask the customer to refresh once in product and verify it. If the issue persist kindly report back with screenshot of active accounts in banking website page as well as in product.
+
+.Customer needs to take action in banksite.Currently there is no issue. FI health is fine.
+
+
+We are unable to research on your originally reported issue due to . Please ask customer to update credentials and refresh again.If the issue still persist Kindly report back.
+
+--------------------------------------------------------------------------------------------------
+We are unable to research on originally reported issue due to when our product trying to get details from your account, the bank website prompt for OTP. Requesting the customer to login to your account and provide necessary answer and then report back if issue still persists kindly report back.
+
+
+ While analyzing the issue we found the bank website is prompting for OTP. Requesting the customer to login to your account and provide necessary answer. If the still persist kindly report back with screenshot of issue occured page in product side.
+-------------------------------------------------------------------------------------------------------
+
+While analyzing the issue we found currently there is no issue all the accounts are refreshed to 0 fine and the transactions are updated fine till march-6.So kindly ask the customer to update and verify it. If any issue still persist, please report back.
+
+ we are pleased to inform your issue has been resolved and all the accounts are refreshed to 0 fine.So kindly ask the customer refresh and verify it.If the issue still persist kindly report back with following information.
+ 1)Name of the account
+ 2)Screeshot of issue occured account in banking website page as well as in product side
+
+
+ While analyzing the issue we found the bank website is prompting for OTP. Requesting the customer to login to your account and provide necessary answer. If the still persist kindly report back.
+
+While analyzing the issue we found the accounts and the transactions are updated fine till march-8 as per in banking website.So kindly ask the customer to update and verify it. If the issue still persist, please report back with screenshot of banking website page as well as in product side.
+
+We are unable to research on your originally reported issue due to the bank website prompt for security question which is unavailable in product so we cant reach your site for further investigation.So kinldy ask the customer to update the required MFA answers in product and try again. If the issue still persist Kindly report back with screenshot of issue occured transactions in banking website page.
+
+
+While analyzing your issue in the online banking webiste we are getting message "Consumer Access Agreement". Requesting customer to login bank website and take necessary action to complete your profile and if the issue still persist kindly report back.
+
+User needs to complete action.
+
+While analyzing your issue, we found that when our product trying to get details from your account, the bank website prompt for security question. Requesting the customer to login to your account for multiple times and provide answer for all the security question and then refresh the account.
+
+
+---------------------------------------------------------------------------------------------
+
+While analyzing the issue we found the accounts and transactions are updated fine per in banking website .So Kinldy ask the customer to refresh once in product and verify it. If the issue still persist, kindly report back with following information.
+1)Name of the account
+2)Screeshot of issue occured account in banking website page as well as in product side
+
+We are unable to research on originally reported issue due to when our product trying to get details from your account, the bank website prompt for MFA answer which is not available in product. So kindly ask the customer to update the required MFA in product .Requesting the customer to login to your account and provide necessary answer and try again. if issue still persists Kindly report back with date range and screnshot of missing transaction in online banking webiste page.
+
+We are unable to research on originally reported issue due to when our product trying to get details from your account, the bank website prompt for MFA answer which is not available in product. So kindly ask the customer to update the required MFA in product .Requesting the customer to login to your account and provide necessary answer and try again. if issue still persists Kindly report back with following information.
+1)Name of the account
+2)Screeshot of issue occured account in banking website page as well as in product side
+
+We are unable to replicate on your originally reported issue due to the banking website is down. So Kindly ask customer to refresh once in product and try again.If the issue still persist Kindly report back.
+
+
+We are unable to research on originally reported issue due to getting message "Your account information is temporarily unavailable." in banking site so we cant reach your site for further investigation.So kindly ask the customer to refresh once in product and verify it.if the issue still persist kindly report back with screenshot of banking website as well as in product side.
+
+
+
+Customer password credential format updated in our DB is "00xxxxxx" and for username is "xxxxxxxxxx" where as X denotes Capital letter,x denotes small letter,0 denotes numbers,# denotes special characters. Please do confirm with the customer whether the above credential format for username/password credential updated in the product is correct and is the same that he is using in the bank website. (1) If yes,please do report us back so that we will further analyze on the issue. (2) If No,kindly ask the customer to update the right credentials in the product as per site 
