@@ -1,0 +1,261 @@
+package com.demo.OVERALL_OPTIMUS;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Count_Analysis extends MyScriptFrame {
+	static ArrayList<String> script_name = new ArrayList<String>();
+	static ArrayList<String> err_code = new ArrayList<String>();
+	static ArrayList<String> unique_script = new ArrayList<String>();
+	static ArrayList<String> unique_err_code = new ArrayList<String>();
+	static ArrayList<String> unique_err = new ArrayList<String>();
+	static ArrayList<String> occurrence = new ArrayList<String>();
+	static ArrayList<String> adder = new ArrayList<String>();
+	static ArrayList<String> newadder = new ArrayList<String>();
+	static ArrayList<String> heading = new ArrayList<String>();
+	static ArrayList<String> compare_tree = new ArrayList<String>();
+	static StringBuffer def_buffer = new StringBuffer();
+	static Map<String, Integer> maper = new HashMap<String, Integer>();
+	static TreeSet<String> tree = new TreeSet<String>();
+	static TreeSet<String> ori_script_name = new TreeSet<String>();
+	static TreeSet<String> ori_err_code = new TreeSet<String>();
+	static ArrayList<String> given_script = new ArrayList<String>();
+	static int cntr = 1;
+
+	private static void begin() throws Exception {
+		// StringBuffer sb1 = new StringBuffer();
+		// sb1.append(String.valueOf(filename) + ".xlsx");
+		InputStream input = new FileInputStream("C:\\Tickets\\Book1.xlsx");
+		int ctr = 1;
+		Workbook wb = WorkbookFactory.create(input);
+		Sheet sheet = wb.getSheetAt(0);
+		Row row = null;
+		Cell cell = null;
+		boolean isNull = false;
+		do {
+			try {
+				row = sheet.getRow(ctr++);
+				cell = row.getCell(1);
+				script_name.add(cell.toString());
+			} catch (Exception e) {
+				isNull = true;
+			}
+		} while (!isNull);
+		input.close();
+		err_code();
+
+	}
+
+	private static void err_code() throws Exception {
+		InputStream input = new FileInputStream("C:\\Tickets\\Book1.xlsx");
+		int ctr = 1;
+		Workbook wb = WorkbookFactory.create(input);
+		Sheet sheet = wb.getSheetAt(0);
+		Row row = null;
+		Cell cell = null;
+		boolean isNull = false;
+		do {
+			try {
+				row = sheet.getRow(ctr++);
+				cell = row.getCell(2);
+				err_code.add(cell.toString());
+			} catch (Exception e) {
+				isNull = true;
+			}
+		} while (!isNull);
+		input.close();
+		duplicate();
+	}
+
+	private static void duplicate() throws Exception {
+		int cntr = 1;
+		for (int i = 0; i < err_code.size(); i++) {
+			def_buffer.delete(0, def_buffer.length());
+			def_buffer.append(script_name.get(i)).append("-").append(err_code.get(i));
+			adder.add(def_buffer.toString());
+		}
+		for (String string : adder) {
+			// System.out.println(string);
+		}
+		System.out.println("---------------------------------------");
+
+		for (String string : adder) {
+			def_buffer.delete(0, def_buffer.length());
+			def_buffer.append(string).append("-").append(Collections.frequency(adder, string));
+			newadder.add(def_buffer.toString());
+		}
+		tree.addAll(newadder);
+		for (String string : tree) {
+			System.out.println(string);
+		}
+		compare_tree.addAll(tree);
+		sepeartor(tree);
+
+	}
+
+	private static void sepeartor(TreeSet<String> tree) throws Exception {
+		Iterator<String> itr2 = tree.iterator();
+		while (itr2.hasNext()) {
+			String err = itr2.next();
+			StringTokenizer tokens = new StringTokenizer(err, "-");
+			String scriptname = tokens.nextToken();
+			String err_code = tokens.nextToken();
+			String occurence = tokens.nextToken();
+			unique_script.add(scriptname);
+			unique_err.add(err_code);
+			occurrence.add(occurence);
+		}
+		headcall(unique_script, unique_err, occurrence);
+	}
+
+	private static void headcall(List<String> unique_script, List<String> code, List<String> occurrence)
+			throws Exception {
+		if (unique_script.size() == code.size() && code.size() == occurrence.size()
+				&& unique_script.size() == code.size()) {
+
+			for (int i = 0; i < unique_script.size(); i++) {
+				heading.add(code.get(i));
+			}
+			heading.add("Total");
+			ori_err_code.addAll(heading);
+			unique_err_code.add("Script Name");
+			unique_err_code.addAll(ori_err_code);
+
+		}
+		for (String string : script_name) {
+			// System.out.println(string);
+		}
+		for (String string : heading) {
+			// System.out.println(string);
+		}
+		printer();
+	}
+
+	private static void printer() throws Exception {
+		cntr = 1;
+		XSSFCell xSSFCell = null;
+		XSSFWorkbook book = null;
+		try {
+			book = new XSSFWorkbook();
+			XSSFSheet sheet = book.createSheet("Counter");
+			XSSFCellStyle style = book.createCellStyle();
+			XSSFCellStyle xSSFCellStyle1 = book.createCellStyle();
+			XSSFCellStyle xSSFCellStyle2 = book.createCellStyle();
+			XSSFCellStyle xSSFCellStyle3 = book.createCellStyle();
+			XSSFFont font = book.createFont();
+			style.setAlignment((short) 2);
+			XSSFRow row = sheet.createRow(0);
+			for (int mainitr = 0; mainitr < unique_err_code.size(); mainitr++) {
+				String cellname = "cell" + mainitr;
+				xSSFCell = row.createCell(mainitr);
+				xSSFCell.setCellValue(unique_err_code.get(mainitr));
+				xSSFCellStyle1.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+				xSSFCellStyle1.setFillPattern((short) 1);
+				xSSFCell.setCellStyle((CellStyle) xSSFCellStyle1);
+				font.setBoldweight((short) 700);
+				xSSFCellStyle1.setFont(font);
+				xSSFCell.setCellStyle((CellStyle) style);
+				xSSFCell.setCellStyle((CellStyle) xSSFCellStyle1);
+			}
+			ori_script_name.addAll(script_name);
+			given_script.addAll(ori_script_name);
+			for (int i = 0; i < given_script.size(); i++) {
+				row = sheet.createRow(i + 1);
+				for (int j = 0; j < given_script.size(); j++) {
+					xSSFCell = row.createCell(j);
+					if (xSSFCell.getColumnIndex() == 0) {
+						xSSFCell.setCellValue(given_script.get(i));
+						xSSFCell.setCellStyle((CellStyle) style);
+					}
+				}
+			}
+
+			XSSFWorkbook ExcelWBook = new XSSFWorkbook("C:\\Tickets\\Counter.xlsx");
+			XSSFSheet ExcelWSheet = ExcelWBook.getSheet("Counter");
+			row = sheet.getRow(0);
+			int totalrows = ExcelWSheet.getPhysicalNumberOfRows();
+			int totalcols = row.getLastCellNum();
+			System.out.println("Total COlumns " + totalcols);
+			System.out.println("Total number of Rows :::" + totalrows);
+
+			for (int i = 1; i < totalrows; i++) {
+				String name = String.valueOf(sheet.getRow(i).getCell(0));
+				System.out.println(name);
+			}
+			for (int i = 1; i < totalcols; i++) {
+				String name = String.valueOf(row.getCell(i));
+				System.out.println(name);
+			}
+
+			for (int i = 0; i < compare_tree.size(); i++) {
+				cntr = 1;
+				for (int j = i; j < totalrows; j++) {
+					String treevalue = compare_tree.get(j - 1);
+					String counter_value = String.valueOf(sheet.getRow(i).getCell(0));
+					if (StringUtils.containsIgnoreCase(treevalue, String.valueOf(sheet.getRow(i).getCell(0)))) {
+						for (int k = 0; k < totalcols; k++) {
+
+							StringTokenizer tokens = new StringTokenizer(treevalue, "-");
+							while (tokens.hasMoreTokens()) {
+								String name = tokens.nextToken();
+								String error = tokens.nextToken();
+								String occur = tokens.nextToken();
+
+								String head_err = String.valueOf(row.getCell(k + 1));
+								// System.out.println(head_err);
+								if (StringUtils.equalsIgnoreCase(error, head_err)) {
+									System.out.println(occur);
+
+								}
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+		FileOutputStream out = new FileOutputStream(new File("C:\\Tickets\\Counter.xlsx"));
+		book.write(out);
+		System.out.println("**********Created Successfully*******************");
+		System.out.println("");
+
+	}
+
+	public static void main(String[] args) throws Exception {
+		begin();
+	}
+}
