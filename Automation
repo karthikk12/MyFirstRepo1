@@ -1,0 +1,376 @@
+package com.demo.AutomationDemo_V1;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.ProgressMonitor;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.Desktop;
+
+import javax.swing.JProgressBar;
+import java.awt.SystemColor;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
+
+public class Automation_Status_Analyser {
+
+	private JFrame frame;
+	private JTextField input_field;
+	private static ArrayList<String> First_ticketNumber = new ArrayList<String>();
+	private static ArrayList<String> ticketNumber = new ArrayList<String>();
+	static File details_form = new File("C:\\Develop avecto\\encryption.txt");
+	private static Desktop desk = Desktop.getDesktop();
+	private static boolean recheck = false;
+	private static Encrypt_text encrypt = new Encrypt_text();
+	private static JTextField user_name_field;
+	private static JTextField password_fileld;
+	static String username;
+	static String password;
+	static String vault_permission = "false";
+	static Encrypt_text encrypt_obj = new Encrypt_text();
+	private static JTextField Close_field;
+	private static JTextField err_msg_field;
+	static int close_cnnt = 0;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Automation_Status_Analyser window = new Automation_Status_Analyser();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public static void dashit_login(DesiredCapabilities capabilities, WebDriver driver) throws Exception {
+		boolean check = false;
+		try {
+
+			Thread.sleep(1000);
+			driver.get("https://dash.intuit.com/platform/#/");
+			driver.findElement(By.xpath("//input[@id='username']")).sendKeys(username);
+			driver.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
+			driver.findElement(By.xpath("//input[@class='sso-submit']")).click();
+			driver.findElement(By.id("duo_iframe"));
+			driver.switchTo().frame(0);
+			driver.findElement(By.xpath("//button[@type='submit'][contains(.,'Call Me')]")).click();
+			Thread.sleep(30000);
+			check = true;
+			status_finder(capabilities, driver);
+
+		} catch (NoSuchElementException e) {
+			dashit_login(capabilities, driver);
+		}
+	}
+
+	public static void status_finder(DesiredCapabilities capabilities, WebDriver driver) {
+		int cnt = 0;
+		date_fetcher();
+		for (String string : First_ticketNumber) {
+			if (StringUtils.isNotEmpty(string)) {
+				String validstring = string.trim();
+				ticketNumber.add(validstring);
+			}
+		}
+		for (int i = 0; i < ticketNumber.size(); i++) {
+			String status = "";
+			boolean check = false;
+			String cutter_status = null;
+			boolean nextstatus = false;
+			while (!nextstatus) {
+// Ip , OFX, Web Services Section
+				try {
+					driver.get("https://dash.intuit.com/platform/#/widget/FDPTools/FdpSupportWebToolWidget@0.0.10");
+					Thread.sleep(5000);
+					driver.findElement(By.xpath("//input[contains(@name,'ticketSearchId')]"))
+							.sendKeys(ticketNumber.get(i));
+					driver.findElement(By.xpath("//span[contains(@class,'glyphicon glyphicon-search')]")).click();
+					Thread.sleep(10000);
+					try {
+
+//						status = driver.findElement(By.xpath("//div[@id='tc_19']//div[contains(text(),'OFX')]"))
+//								.getText();
+//						if (status.equalsIgnoreCase("OFX")) {
+//							nextstatus = true;
+//							check = true;
+//							System.out.println(ticketNumber.get(i) + "---------->" + status);
+//
+//						}
+						if (check == false) {
+							driver.findElement(By.xpath("(//div[contains(@class,'form-group')])[1]"));
+							status = driver.findElement(By.xpath("(//div[contains(@class,'form-group')])[1]"))
+									.getText();
+							cutter_status = StringUtils.substringBetween(status, "Status", ")");
+							if (!cutter_status.isEmpty() && cutter_status != null) {
+								check = true;
+							}
+							nextstatus = true;
+							cnt++;
+							System.out.println(ticketNumber.get(i) + "---------->" + cutter_status.trim());
+						}
+					} catch (NoSuchElementException e) {
+
+					}
+
+// Closed,Closed Deployed Section
+					if (check == false) {
+						try {
+
+							status = driver.findElement(By.xpath("(//div[contains(.,'Closed')])[14]")).getText();
+							if (StringUtils.equalsIgnoreCase(status, "Closed")) {
+								status = "Closed";
+							} else if (StringUtils.equalsIgnoreCase(status, "Closed Deployed")) {
+								status = "Closed Deployed";
+							} else if (StringUtils.equalsIgnoreCase(status, "Ready to be Deployed")) {
+								status = "Ready to be Deployed";
+							}
+							nextstatus = true;
+							cnt++;
+							close_cnnt++;
+							System.out.println(ticketNumber.get(i) + "---------->" + status);
+						} catch (NoSuchElementException e) {
+
+						}
+					}
+
+				}
+
+				catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("Something went wrong");
+				}
+			}
+		}
+		System.out.println(close_cnnt);
+		System.out.println();
+		date_fetcher();
+		driver.close();
+		System.exit(0);
+
+	}
+
+	private static void date_fetcher() {
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		String track = format.format(date);
+		System.out.println(track);
+	}
+
+	public static void getcredentails(String[] credentials) {
+		String exist_cred[] = new String[2];
+		username = credentials[0];
+		password = credentials[1];
+
+	}
+
+	public static void begin(String filename) throws Exception {
+		String exist_cred[] = new String[2];
+		if (!username.isEmpty() && !password.isEmpty() && vault_permission.equals("true") && !filename.isEmpty()) {
+			encrypt_obj.FileCreator(username, password);
+			System.out.println(username);
+			System.out.println(password);
+		}
+		if (username.isEmpty() && password.isEmpty() && vault_permission.equals("false") && !filename.isEmpty()) {
+			encrypt_obj.pick_cred(username, password);
+		}
+
+		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+			err_msg_field.setText("Username & password is empty");
+			System.out.println("Field Error #2");
+
+		}
+		if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(password)) {
+			System.setProperty("webdriver.chrome.driver", "C:\\SW\\chromedriver_win32\\chromedriver.exe");
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+			WebDriver driver = new ChromeDriver();
+			StringBuffer sb1 = new StringBuffer();
+			sb1.append(String.valueOf(String.valueOf(filename)) + ".xlsx");
+			InputStream input = new FileInputStream(sb1.toString());
+			int ctr = 1;
+			Workbook wb = WorkbookFactory.create(input);
+			Sheet sheet = wb.getSheetAt(0);
+			Row row = null;
+			Cell cell = null;
+			boolean isNull = false;
+			while (true) {
+				try {
+					row = sheet.getRow(ctr++);
+					cell = row.getCell(0);
+					First_ticketNumber.add(cell.toString());
+				} catch (Exception e) {
+					isNull = true;
+				}
+				if (isNull) {
+					input.close();
+					dashit_login(capabilities, driver);
+					return;
+				}
+			}
+		}
+	}
+
+	public Automation_Status_Analyser() throws Exception {
+		initialize();
+	}
+
+	private void initialize() throws Exception {
+		frame = new JFrame("Auto Analyzer >>>>> Calculating......");
+		frame.getContentPane().setBackground(new Color(153, 204, 204));
+		frame.getContentPane().setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		frame.setBounds(100, 100, 850, 584);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+
+		input_field = new JTextField();
+		input_field.setBounds(192, 308, 434, 22);
+		input_field.setBackground(SystemColor.menu);
+		frame.getContentPane().add(input_field);
+		input_field.setColumns(10);
+
+		final JCheckBox vault_check = new JCheckBox("Secure Vault");
+		vault_check.setBackground(SystemColor.inactiveCaption);
+		vault_check.setBounds(363, 247, 114, 25);
+		frame.getContentPane().add(vault_check);
+
+		JLabel lblNewLabel = new JLabel("File+Path :");
+		lblNewLabel.setBounds(88, 311, 104, 16);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		frame.getContentPane().add(lblNewLabel);
+
+		JButton btnNewButton = new JButton("Analyse");
+		btnNewButton.setBounds(640, 305, 97, 25);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!input_field.getText().isEmpty()) {
+					String filename = input_field.getText();
+					username = user_name_field.getText();
+					password = password_fileld.getText();
+					if (!StringUtils.isEmpty(filename) && !StringUtils.isEmpty(username)
+							&& !StringUtils.isEmpty(password)) {
+						if (vault_check.isSelected()) {
+							vault_permission = "true";
+						}
+
+						try {
+							begin(filename);
+						} catch (Exception e) {
+
+							e.printStackTrace();
+						}
+					}
+					if (!StringUtils.isEmpty(filename) && StringUtils.isEmpty(username)
+							&& StringUtils.isEmpty(password)) {
+						try {
+							begin(filename);
+						} catch (Exception e) {
+
+							e.printStackTrace();
+						}
+					}
+
+					else {
+						System.out.println("Field Empty error");
+					}
+				}
+			}
+		});
+		frame.getContentPane().add(btnNewButton);
+
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(-35, 149, 745, -7);
+		frame.getContentPane().add(progressBar);
+
+		user_name_field = new JTextField();
+		user_name_field.setBounds(319, 114, 202, 22);
+		frame.getContentPane().add(user_name_field);
+		user_name_field.setColumns(10);
+
+		password_fileld = new JTextField();
+		password_fileld.setBounds(319, 189, 202, 22);
+		frame.getContentPane().add(password_fileld);
+		password_fileld.setColumns(10);
+
+		JLabel lblNewLabel_1 = new JLabel("USER NAME :");
+		lblNewLabel_1.setForeground(Color.BLUE);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_1.setBounds(228, 120, 97, 16);
+		frame.getContentPane().add(lblNewLabel_1);
+
+		JLabel lblNewLabel_2 = new JLabel("PASSWORD :");
+		lblNewLabel_2.setForeground(Color.BLUE);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2.setBounds(228, 192, 97, 16);
+		frame.getContentPane().add(lblNewLabel_2);
+
+		JLabel lblNewLabel_3 = new JLabel("< AUTO CLOSURE ANALYSER  #C2 >");
+		lblNewLabel_3.setForeground(new Color(220, 20, 60));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setBounds(243, 32, 349, 35);
+		frame.getContentPane().add(lblNewLabel_3);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(-24, 363, 869, 2);
+		frame.getContentPane().add(separator);
+
+		JLabel lblNewLabel_4 = new JLabel("Total Closure :");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setBounds(12, 423, 126, 25);
+		frame.getContentPane().add(lblNewLabel_4);
+
+		Close_field = new JTextField();
+		Close_field.setBounds(125, 424, 132, 22);
+		frame.getContentPane().add(Close_field);
+		Close_field.setColumns(10);
+
+		JLabel lblNewLabel_5 = new JLabel("ERR MSG >> : ");
+		lblNewLabel_5.setForeground(new Color(255, 0, 0));
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setBounds(426, 425, 104, 21);
+		frame.getContentPane().add(lblNewLabel_5);
+
+		err_msg_field = new JTextField();
+		err_msg_field.setBounds(528, 424, 292, 22);
+		frame.getContentPane().add(err_msg_field);
+		err_msg_field.setColumns(10);
+
+	}
+}
